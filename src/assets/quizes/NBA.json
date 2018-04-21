@@ -1,0 +1,17 @@
+[
+  {
+      "question": "Which team has Lebron James played for?",
+      "choices": ["Miami Heat", "Chicago Bulls", "New York Nicks", "Golden States Warrior", "Denver Nuggets"],
+      "correctAnswer": 0
+  },
+  {
+      "question": "Which state is the team of Cavaliar located?",
+      "choices": ["Carolina", "Ohio", "North Carolina", "South Carolina", "Washington"],
+      "correctAnswer": 1
+  },
+  {
+      "question": "Which team has won most of championships in NBA history?",
+      "choices": ["Boston Celtics", "Los Angeles Lakers", "Chicago Bulls", "San Antonio Spurs", "Houston Rockets"],
+      "correctAnswer": 0
+  }
+]
