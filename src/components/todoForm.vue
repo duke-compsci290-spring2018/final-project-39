@@ -65,13 +65,13 @@ export default {
             else {
                 this.new_todo['id'] = this.todos.length+1;
                 this.todos.push(this.new_todo);
-                this.new_todo = {
-                    id: -1,
-                    text: ' ',
-                    summary: ' ',
-                    time: ' ',
-                    location: ' '
-                }
+            }
+            this.new_todo = {
+                id: -1,
+                text: ' ',
+                summary: ' ',
+                time: ' ',
+                location: ' '
             }
         }
     }
