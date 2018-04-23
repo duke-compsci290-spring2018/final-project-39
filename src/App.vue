@@ -1,5 +1,20 @@
 <template>
     <div id="app">
+        <gmap-map
+            :center="center"
+            :zoom="3"
+            @click="addMarker"
+            style="height: 480px;"
+        >
+            <gmap-marker
+                :key="index"
+                v-for="(m, index) in markers"
+                :position="m.position"
+                :clickable="true"
+                :draggable="true"
+                @click="center = m.position"
+            ></gmap-marker>
+        </gmap-map>
         <Todoform v-bind:isNewTodo="isNewTodo"
                   v-bind:todos="todos"
                   v-bind:new_todo="new_todo"></Todoform>
@@ -38,6 +53,18 @@ export default {
     // NOTE in a component, data must be a function that returns a NEW version of the values
     data () {
         return {
+            center: {
+                lat: 40,
+                lng: -35
+            },
+            markers: [
+                {
+                    position: { lat: 35.99, lng: -78.89}, // Durham, NC
+                },
+                {
+                    position: { lat: 48.85, lng: 2.35},   // Paris, France
+                }
+            ],
             cur_id: 0,
             isNewTodo: true,
             new_todo: {
@@ -81,7 +108,12 @@ export default {
         handle_editTodo (todo){
             this.isNewTodo = false,
             this.new_todo = JSON.parse(JSON.stringify(todo)); //https://medium.com/@tkssharma/objects-in-javascript-object-assign-deep-copy-64106c9aefab
-            
+
+        },
+        addMarker (event) {
+            this.markers.push({
+                position: { lat: event.latLng.lat(), lng: event.latLng.lng() }
+            })
         }
     },
     created: {
