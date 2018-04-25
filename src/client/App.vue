@@ -68,34 +68,34 @@ export default {
             cur_id: 0,
             isNewTodo: true,
             new_todo: {
-                id: -1,
-                text: ' ',
+                eid: -1,
+                title: ' ',
                 summary: ' ',
                 time: ' ',
                 location: ' '
             },
             todos: [
-                {
-                    id: 1,
-                    text: '3v3 Basketball Game',
-                    summary: ' ',
-                    time: '2018-04-15',
-                    location: 'Duke'
-                },
-                {
-                    id: 2,
-                    text: 'Spring Formal',
-                    summary: ' ',
-                    time: '2018-04-13',
-                    location: 'Duke'
-                },
-                {
-                    id: 3,
-                    text: 'Web Project Demo',
-                    summary: ' ',
-                    time: '2018-04-17',
-                    location: 'Duke'
-                }
+                // {
+                //     id: 1,
+                //     text: '3v3 Basketball Game',
+                //     summary: ' ',
+                //     time: '2018-04-15',
+                //     location: 'Duke'
+                // },
+                // {
+                //     id: 2,
+                //     text: 'Spring Formal',
+                //     summary: ' ',
+                //     time: '2018-04-13',
+                //     location: 'Duke'
+                // },
+                // {
+                //     id: 3,
+                //     text: 'Web Project Demo',
+                //     summary: ' ',
+                //     time: '2018-04-17',
+                //     location: 'Duke'
+                // }
             ]
         }
     },
@@ -105,10 +105,17 @@ export default {
         Todoform
     },
     methods: {
+        listEvents () {
+            fetch(`http://localhost:3000`, { method: 'GET' })
+                .then(response => response.json())
+                .then(data => this.todos = data)
+                .catch(error => console.log(error))
+            console.log(this.todos);
+        },
         handle_editTodo (todo){
             this.isNewTodo = false,
             this.new_todo = JSON.parse(JSON.stringify(todo)); //https://medium.com/@tkssharma/objects-in-javascript-object-assign-deep-copy-64106c9aefab
-
+            console.log(this.todos);
         },
         addMarker (event) {
             this.markers.push({
@@ -116,7 +123,8 @@ export default {
             })
         }
     },
-    created: {
+    mounted () {
+        this.listEvents();
     }
 }
 </script>

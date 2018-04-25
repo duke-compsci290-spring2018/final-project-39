@@ -37,15 +37,16 @@ temp.find(function(err, doc) {
 // });
 
 /* Update from db*/
-temp.update({"eid": 0}, {$set:{"title": "5v5 Basketball"}}, function(err, raw){
-    console.log(raw);
-});
+// temp.update({"eid": 0}, {$set:{"title": "5v5 Basketball"}}, function(err, raw){
+//     console.log(raw);
+// });
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   // res.render('index', { title: 'Express' });
   res.send(JSON.stringify(result));
   res.end();
+  console.log(`${result.length} event(s) in database`)
 });
 
 module.exports = router;

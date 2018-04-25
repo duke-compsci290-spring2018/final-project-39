@@ -8,7 +8,7 @@
             <form @submit.prevent="onSubmit">
                 <label>
                     Event Title
-                    <input type="textarea" v-model="new_todo.text" value='' class="form-control"/>
+                    <input type="textarea" v-model="new_todo.title" value='' class="form-control"/>
                 </label>
 
 
@@ -46,7 +46,7 @@ export default {
     },
     methods: {
         onSubmit() {
-            var description = this.new_todo.text.trim();
+            var description = this.new_todo.title.trim();
             if (!description){
                 alert('Description cannot be blank!');
                 return;
@@ -54,9 +54,9 @@ export default {
             if (!this.isNewTodo) {
                 console.log('update item');
                 // console.log(this.new_todo);
-                var idx = this.new_todo['id'] - 1;
+                var idx = this.new_todo['eid'] - 1;
                 console.log(idx);
-                this.todos[idx]['text'] = this.new_todo['text'];
+                this.todos[idx]['title'] = this.new_todo['title'];
                 this.todos[idx]['summary'] = this.new_todo['summary'];
                 this.todos[idx]['time'] = this.new_todo['time'];
                 this.todos[idx]['location'] = this.new_todo['location'];
@@ -68,7 +68,7 @@ export default {
             }
             this.new_todo = {
                 id: -1,
-                text: ' ',
+                title: ' ',
                 summary: ' ',
                 time: ' ',
                 location: ' '

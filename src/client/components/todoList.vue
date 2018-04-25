@@ -5,7 +5,7 @@
         <ul class="list-group">
             <li v-for="(todo, index) in todos">
                 <span title="click me to update this item" class="list-item" @click="$emit('editTodo', todo)">
-                    {{ todo['text'] }} @ {{ todo['time'] }} @ {{ todo['location'] }} </span>
+                    {{ todo['title'] }} @ {{ todo['time'] }} @ {{ todo['location'] }} </span>
                 <button @click="deleteTodo(todo)"  class="btn btn-danger" href="#">X</button>
             </li>
         </ul>
@@ -25,11 +25,11 @@ export default {
     methods: {
         deleteTodo(todo) {
             for (var i = 0; i < this.todos.length; i++) {
-                if (this.todos[i].id == todo.id) {
+                if (this.todos[i].eid == todo.eid) {
                     //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
                     this.todos.splice(i, 1);
                     for (var j = i; j < this.todos.length; j++)
-                        this.todos[j].id--;
+                        this.todos[j].eid--;
                     return;
                 }
             }
