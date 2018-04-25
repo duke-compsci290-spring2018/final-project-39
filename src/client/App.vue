@@ -2,7 +2,7 @@
     <div id="app">
         <gmap-map
             :center="center"
-            :zoom="3"
+            :zoom="12"
             @click="addMarker"
             style="height: 480px;"
         >
@@ -54,8 +54,8 @@ export default {
     data () {
         return {
             center: {
-                lat: 40,
-                lng: -35
+                lat: 35.99,
+                lng: -78.89
             },
             markers: [
                 {
