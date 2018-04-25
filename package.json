@@ -6,8 +6,10 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "dev-server": "nodemon ./src/server/main.js --exec babel-node --presets env",
+    "dev-client": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "start": "nodemon ./src/server/main.js --exec babel-node --presets env"
   },
   "dependencies": {
     "vue": "^2.5.11",
