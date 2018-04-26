@@ -24,15 +24,16 @@ export default {
     },
     methods: {
         deleteTodo(todo) {
-            for (var i = 0; i < this.todos.length; i++) {
-                if (this.todos[i].eid == todo.eid) {
-                    //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
-                    this.todos.splice(i, 1);
-                    for (var j = i; j < this.todos.length; j++)
-                        this.todos[j].eid--;
-                    return;
-                }
-            }
+            this.$emit('handle_deleteEvent', todo);
+            // for (var i = 0; i < this.todos.length; i++) {
+            //     if (this.todos[i].eid == todo.eid) {
+            //         //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
+            //         this.todos.splice(i, 1);
+            //         for (var j = i; j < this.todos.length; j++)
+            //             this.todos[j].eid--;
+            //         return;
+            //     }
+            // }
         }
     }
 }

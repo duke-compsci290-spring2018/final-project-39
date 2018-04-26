@@ -18,11 +18,13 @@
         <Todoform v-bind:isNewTodo="isNewTodo"
                   v-bind:todos="todos"
                   v-bind:new_todo="new_todo"
+                  v-on:handle_submitOldEvent="handle_submitOldEvent()"
                   v-on:handle_submitNewEvent="handle_submitNewEvent()"></Todoform>
 
         <Todolist v-bind:isNewTodo="isNewTodo"
                   v-bind:todos="todos"
-                  v-on:editTodo="handle_editTodo($event)"></Todolist>
+                  v-on:editTodo="handle_editTodo($event)"
+                  v-on:handle_deleteEvent="handle_deleteEvent($event)"></Todolist>
 
         <hr/>
 
@@ -66,7 +68,7 @@ export default {
                     position: { lat: 48.85, lng: 2.35},   // Paris, France
                 }
             ],
-            cur_id: 0,
+            cur_id: -1,
             isNewTodo: true,
             new_todo: {
                 eid: -1,
@@ -92,6 +94,18 @@ export default {
                 .then(data => console.log(this.todos))
                 .catch(error => console.log(error))
         },
+        handle_submitOldEvent() {
+            fetch(`http://localhost:3000/edit_registered_event`, {
+                method: 'POST',
+                body: JSON.stringify(this.new_todo),
+                headers: {
+                    'content-type': 'application/json'
+                }
+            }).then(response => this.listEvents())
+              .catch(error => console.log(error))
+            this.isNewTodo = true;
+            this.resetInputValues();
+        },
         handle_submitNewEvent() {
             fetch(`http://localhost:3000/register_event`, {
                 method: 'POST',
@@ -101,7 +115,17 @@ export default {
                 }
             }).then(response => this.listEvents())
               .catch(error => console.log(error))
-            // this.resetInputValues()
+            this.resetInputValues();
+        },
+        handle_deleteEvent(todo) {
+            fetch(`http://localhost:3000/delete_event`, {
+                method: 'POST',
+                body: JSON.stringify(todo),
+                headers: {
+                    'content-type': 'application/json'
+                }
+            }).then(response => this.listEvents())
+              .catch(error => console.log(error))
         },
         handle_editTodo (todo){
             this.isNewTodo = false,
@@ -112,6 +136,15 @@ export default {
             this.markers.push({
                 position: { lat: event.latLng.lat(), lng: event.latLng.lng() }
             })
+        },
+        resetInputValues() {
+            this.new_todo = {
+                id: -1,
+                title: ' ',
+                summary: ' ',
+                time: ' ',
+                location: ' '
+            }
         }
     },
     mounted () {

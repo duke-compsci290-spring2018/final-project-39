@@ -53,26 +53,18 @@ export default {
             }
             if (!this.isNewTodo) {
                 console.log('update item');
-                // console.log(this.new_todo);
-                var idx = this.new_todo['eid'] - 1;
-                console.log(idx);
-                this.todos[idx]['title'] = this.new_todo['title'];
-                this.todos[idx]['summary'] = this.new_todo['summary'];
-                this.todos[idx]['time'] = this.new_todo['time'];
-                this.todos[idx]['location'] = this.new_todo['location'];
-                this.isNewTodo = true;
+                this.$emit('handle_submitOldEvent');
             }
             else {
-                this.new_todo['eid'] = this.todos.length+1;
-                // this.todos.push(this.new_todo);
+                // this.new_todo['eid'] = this.todos.length+1;
+                if (this.todos.length > 0) {
+                    var last_idx = this.todos.length - 1;
+                    this.new_todo['eid'] = this.todos[last_idx]['eid'] + 1;
+                }
+                else {
+                    this.new_todo['eid'] = 0
+                }
                 this.$emit('handle_submitNewEvent');
-            }
-            this.new_todo = {
-                id: -1,
-                title: ' ',
-                summary: ' ',
-                time: ' ',
-                location: ' '
             }
         }
     }

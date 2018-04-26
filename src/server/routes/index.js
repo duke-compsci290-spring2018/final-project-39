@@ -29,20 +29,37 @@ router.post('/register_event', function(req, res, next) {
         'time': req.body.time
     }).save(function(err, doc) {
         console.log(doc);
+        res.send('Finish regsitering a new event to db');
+        res.end();
     })
-    res.send('Finish regsitering a new event to db');
-    res.end();
 })
 
+/* Update from db*/
+router.post('/edit_registered_event', function(req, res, next) {
+    console.log("edit_registered_event to db");
+    console.log(req.body);
+    temp.update({"eid": req.body.eid}, {$set:
+        {"title": req.body.title,
+        'summary': req.body.summary,
+        'location': req.body.location,
+        'time': req.body.time}}, function(err, raw) {
+        console.log(raw);
+        res.send('Finish editing an old event to db');
+        res.end();
+    });
+})
 
 /* Remove from db*/
-// temp.remove({"eid": 3}, function(err){
-//     console.log(err);
-// });
+router.post('/delete_event', function(req, res, next) {
+    console.log("delete_event from db");
+    console.log(req.body);
+    temp.remove({"eid": req.body.eid}, function(err){
+        console.log(err);
+        res.send('Finish deleting an event from db');
+        res.end();
+    });
 
-/* Update from db*/
-// temp.update({"eid": 0}, {$set:{"title": "5v5 Basketball"}}, function(err, raw){
-//     console.log(raw);
-// });
+})
+
 
 module.exports = router;
