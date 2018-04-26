@@ -10,6 +10,7 @@ import * as VueGoogleMaps from 'vue2-google-maps';
 // local resources used
 import App from './App.vue'
 import { MAP_KEY } from './assets/secrets'
+import router from './router'
 
 // turn off the console note about switching to production mode
 Vue.config.productionTip = false
@@ -26,6 +27,7 @@ new Vue({
     // HTML element to attach Vue app
     el: '#app',
     // components (HTML, CSS, and JS) used by this app
+    router,
     components: {
         App
     },
