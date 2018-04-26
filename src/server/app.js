@@ -1,13 +1,14 @@
 var createError = require('http-errors');
 var express = require('express');
 var cors = require('cors');
+var BodyParser = require('body-parser');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-// var add = require('./routes/add');
 // var edit = require('./routes/edit');
 // var del = requires('./routes/del');
 
@@ -19,6 +20,10 @@ app.set('view engine', 'pug');
 
 // allow requests from any domain, no cross site concerns
 app.use(cors());
+// parse form data more easily
+app.use(BodyParser.urlencoded({ extended: true }))
+// parse JSON form data
+app.use(BodyParser.json())
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -26,7 +31,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter); // Search
+app.use('/users', usersRouter);
 // app.use('/add', add); // Add
 // app.use('/edit', edit); // Edit
 // app.use('/del', del); // delete

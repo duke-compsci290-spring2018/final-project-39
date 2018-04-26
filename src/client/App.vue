@@ -17,7 +17,8 @@
         </gmap-map>
         <Todoform v-bind:isNewTodo="isNewTodo"
                   v-bind:todos="todos"
-                  v-bind:new_todo="new_todo"></Todoform>
+                  v-bind:new_todo="new_todo"
+                  v-on:handle_submitNewEvent="handle_submitNewEvent()"></Todoform>
 
         <Todolist v-bind:isNewTodo="isNewTodo"
                   v-bind:todos="todos"
@@ -74,29 +75,7 @@ export default {
                 time: ' ',
                 location: ' '
             },
-            todos: [
-                // {
-                //     id: 1,
-                //     text: '3v3 Basketball Game',
-                //     summary: ' ',
-                //     time: '2018-04-15',
-                //     location: 'Duke'
-                // },
-                // {
-                //     id: 2,
-                //     text: 'Spring Formal',
-                //     summary: ' ',
-                //     time: '2018-04-13',
-                //     location: 'Duke'
-                // },
-                // {
-                //     id: 3,
-                //     text: 'Web Project Demo',
-                //     summary: ' ',
-                //     time: '2018-04-17',
-                //     location: 'Duke'
-                // }
-            ]
+            todos: []
         }
     },
     // components (HTML, CSS, and JS) used by this app
@@ -106,11 +85,23 @@ export default {
     },
     methods: {
         listEvents () {
+            console.log('listEvents() called');
             fetch(`http://localhost:3000`, { method: 'GET' })
                 .then(response => response.json())
                 .then(data => this.todos = data)
+                .then(data => console.log(this.todos))
                 .catch(error => console.log(error))
-            console.log(this.todos);
+        },
+        handle_submitNewEvent() {
+            fetch(`http://localhost:3000/register_event`, {
+                method: 'POST',
+                body: JSON.stringify(this.new_todo),
+                headers: {
+                    'content-type': 'application/json'
+                }
+            }).then(response => this.listEvents())
+              .catch(error => console.log(error))
+            // this.resetInputValues()
         },
         handle_editTodo (todo){
             this.isNewTodo = false,

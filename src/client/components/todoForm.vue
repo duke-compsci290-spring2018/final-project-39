@@ -63,8 +63,9 @@ export default {
                 this.isNewTodo = true;
             }
             else {
-                this.new_todo['id'] = this.todos.length+1;
-                this.todos.push(this.new_todo);
+                this.new_todo['eid'] = this.todos.length+1;
+                // this.todos.push(this.new_todo);
+                this.$emit('handle_submitNewEvent');
             }
             this.new_todo = {
                 id: -1,
