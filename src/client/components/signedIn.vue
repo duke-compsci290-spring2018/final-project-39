@@ -22,10 +22,10 @@
                   v-on:handle_submitOldEvent="handle_submitOldEvent()"
                   v-on:handle_submitNewEvent="handle_submitNewEvent()"></Todoform>
         <!-- You hosted events -->
-        <Todolist v-bind:isNewTodo="isNewTodo"
+        <Hostevents v-bind:isNewTodo="isNewTodo"
                   v-bind:host_events="host_events"
                   v-on:editTodo="handle_editTodo($event)"
-                  v-on:handle_deleteEvent="handle_deleteEvent($event)"></Todolist>
+                  v-on:handle_deleteEvent="handle_deleteEvent($event)"></Hostevents>
 
         <Allevents v-bind:all_events="all_events"
                    v-on:bookEvent="handle_bookEvent($event)"></Allevents>
@@ -51,7 +51,7 @@
 
 <script>
 // load another component to be used in the standard Vue object
-import Todolist from './todoList.vue'
+import Hostevents from './hostEvents.vue'
 import Todoform from './todoForm.vue'
 import Allevents from './allEvents.vue'
 import Bookedevents from './bookedEvents.vue'
@@ -94,7 +94,7 @@ export default {
     },
     // components (HTML, CSS, and JS) used by this app
     components: {
-        Todolist,
+        Hostevents,
         Todoform,
         Allevents,
         Bookedevents
@@ -195,13 +195,15 @@ export default {
             this.resetInputValues();
         },
         handle_deleteEvent(todo) {
+            console.log("called from handle_deleteEvent()");
+            console.log(todo);
             fetch(`http://localhost:3000/delete_event`, {
                 method: 'POST',
                 body: JSON.stringify(todo),
                 headers: {
                     'content-type': 'application/json'
                 }
-            }).then(response => this.listEvents())
+            }).then(response => this.listUserInfo())
               .catch(error => console.log(error))
         },
         handle_editTodo (todo){

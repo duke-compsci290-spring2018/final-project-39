@@ -15,7 +15,7 @@
 <script>
 // export anonymous object from this module so it can be accessed by others when imported
 export default {
-    name: 'todoList',
+    name: 'hostEvents',
     props: ['isNewTodo', 'host_events'],
     data () {
         return {

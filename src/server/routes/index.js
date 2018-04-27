@@ -78,17 +78,26 @@ router.post('/book_event', function(req, res, next) {
 })
 
 
-/* Remove from db*/
+/* Previous version: Remove from db*/
+// router.post('/delete_event', function(req, res, next) {
+//     console.log("delete_event from db");
+//     console.log(req.body);
+//     events.remove({"eid": req.body.eid}, function(err){
+//         console.log(err);
+//         res.send('Finish deleting an event from db');
+//         res.end();
+//     });
+// })
+
 router.post('/delete_event', function(req, res, next) {
     console.log("delete_event from db");
     console.log(req.body);
-    events.remove({"eid": req.body.eid}, function(err){
+    console.log("req.body.title: ", req.body.title);
+    events.update({"eid": req.body.eid}, {$set: {"title": "(*Note: Deleted by the host) " + req.body.title}}, function(err) {
         console.log(err);
         res.send('Finish deleting an event from db');
         res.end();
     });
-
 })
-
 
 module.exports = router;
