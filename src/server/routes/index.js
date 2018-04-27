@@ -23,16 +23,28 @@ router.post('/register_event', function(req, res, next) {
     console.log("Regsiter a new event to db");
     console.log(req.body);
     new events({
-        'eid': req.body.eid,
-        'title': req.body.title,
-        'summary': req.body.summary,
-        'location': req.body.location,
-        'time': req.body.time
+        'eid': req.body.new_todo.eid,
+        'title': req.body.new_todo.title,
+        'summary': req.body.new_todo.summary,
+        'location': req.body.new_todo.location,
+        'time': req.body.new_todo.time
     }).save(function(err, doc) {
         console.log(doc);
-        res.send('Finish regsitering a new event to db');
-        res.end();
-    })
+        console.log('8888888888888888');
+        console.log('66666666666666666666');
+        console.log('2333333', req.body.new_userInfo);
+        users.update({"uid": req.body.new_userInfo.uid}, {$set:
+            {"uid": req.body.new_userInfo.uid,
+            "username": req.body.new_userInfo.username,
+            "password":req.body.new_userInfo.password,
+            "email":req.body.new_userInfo.email,
+            "booked_events":req.body.new_userInfo.booked_events,
+            "host_events":req.body.new_userInfo.host_events}}, function(err, raw) {
+                console.log(raw);
+                res.send('Finish adding a new event to db');
+                res.end();
+            })
+        })
 })
 
 /* Update from db*/
