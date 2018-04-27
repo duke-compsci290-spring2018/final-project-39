@@ -18,6 +18,7 @@
         <Todoform v-bind:isNewTodo="isNewTodo"
                   v-bind:host_events="host_events"
                   v-bind:new_todo="new_todo"
+                  v-bind:all_events="all_events"
                   v-on:handle_submitOldEvent="handle_submitOldEvent()"
                   v-on:handle_submitNewEvent="handle_submitNewEvent()"></Todoform>
 
@@ -83,23 +84,8 @@ export default {
                 location: ' '
             },
             all_events: [],  /* User hosted/registered events */
-            booked_events: [], /* All events, read from db events */
-            host_events: [
-                // {
-                //     eid: 0,
-                //     title: 'play dota',
-                //     summary: ' ',
-                //     time: '2017-05-01',
-                //     location: 'DUKE'
-                // },
-                // {
-                //     eid: 1,
-                //     title: 'play lol',
-                //     summary: ' ',
-                //     time: '2017-05-01',
-                //     location: 'DUKE'
-                // }
-            ],
+            booked_events: [], /* All events, read from db users */
+            host_events: [], /* All events, read from db users */
             userInfo : null
         }
     },
@@ -124,12 +110,26 @@ export default {
                 .then(data => console.log("vipppper"))
                 .then(data => console.log(this.all_events))
                 .then(data => {
+                    // populate host_events
+                    this.host_events = [];
                     for (var key in this.userInfo['host_events']) {
                         var eid = this.userInfo['host_events'][key];
                         for (var key in this.all_events) {
                             var e = this.all_events[key];
                             if (e['eid'] === eid) {
                                 this.host_events.push(e);
+                            }
+                        }
+                    }
+
+                    // populate booked_events
+                    this.booked_events = [];
+                    for (var key in this.userInfo['booked_events']) {
+                        var eid = this.userInfo['booked_events'][key];
+                        for (var key in this.all_events) {
+                            var e = this.all_events[key];
+                            if (e['eid'] === eid) {
+                                this.booked_events.push(e);
                             }
                         }
                     }
@@ -145,10 +145,6 @@ export default {
                 .then(data => this.all_events = data)
                 .then(data => console.log(this.all_events))
                 .catch(error => console.log(error))
-                // .then(response => {
-                //     this.all_events = response.json()})
-                // .then(data => console.log(this.all_events))
-                // .catch(error => console.log(error))
         },
         handle_bookEvent() {
             alert("handle bookEvent");
@@ -166,13 +162,18 @@ export default {
             this.resetInputValues();
         },
         handle_submitNewEvent() {
+            this.userInfo['host_events'].push(this.new_todo['eid']);
+            this.userInfo['booked_events'].push(this.new_todo['eid']);
             fetch(`http://localhost:3000/register_event`, {
                 method: 'POST',
-                body: JSON.stringify(this.new_todo),
+                body: JSON.stringify({
+                    'new_todo': this.new_todo,
+                    'new_userInfo': this.userInfo
+                }),
                 headers: {
                     'content-type': 'application/json'
                 }
-            }).then(response => this.listEvents())
+            }).then(response => this.listUserInfo())
               .catch(error => console.log(error))
             this.resetInputValues();
         },
