@@ -6,8 +6,8 @@
                     <h3>Welcome!</h3>
                     <p>Please login in</p>
                     <form class="form">
-                        <input type="text" placeholder="Enter Username" v-model="user_info">
-                        <input type="text" placeholder="Enter Password" v-model="user_info">
+                        <input type="text" placeholder="Enter Username" v-model="user_name">
+                        <input type="text" placeholder="Enter Password" v-model="user_password">
                         <button type="button" class="btn btn-info" v-on:click="user_login">Login</button>
                     </form>
                
@@ -31,7 +31,7 @@
                                       <div class="form-group">
                                         <label for="userPassword">Password</label>
                                           <input type="text" class="form-control"
-                                              id="userPassword" placeholder="Enter New User Password" v-model="temp_email"/>
+                                              id="userPassword" placeholder="Enter New User Password" v-model="temp_password"/>
                                       </div>
                                       <div class="form-group">
                                         <label for="userEmail">Email</label>
@@ -54,10 +54,30 @@
 <script>
 export default {
   name: 'unsignedIn',
+
   data () {
     return {
-      msg: 'Welcome to main page'
+      user_name: "",
+      user_password: "",
+      temp_name: "",
+      temp_password: "",
+      temp_email: "",
+      user_info: []
     }
+  },
+
+  methods : {
+  	user_login () {
+  		console.log('user_login called');
+        fetch('http://localhost:3000/users/'+'search?name='+this.user_name+'&password='+this.user_password, { method: 'GET' })
+            .then(response => response.json())
+            .then(data => this.user_info = data)
+            .then(nextstep => console.log(this.user_info))
+            .catch(error => console.log(error))
+        this.user_name = "";
+        this.user_password = "";
+  	}
+
   }
 }
 </script>
