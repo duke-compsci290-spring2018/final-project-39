@@ -4,7 +4,7 @@
         <h2 id="title">All available events</h2>
         <ul class="list-group">
             <li v-for="(e, index) in all_events">
-                <span title="click me to update this item" class="list-item" @click="$emit('bookEvent', e)">
+                <span title="click me to book this event" class="list-item" @click="$emit('bookEvent', e)">
                     {{ e['title'] }} @ {{ e['time'] }} @ {{ e['location'] }} </span>
             </li>
         </ul>
@@ -20,6 +20,10 @@ export default {
         }
     },
     methods: {
+    },
+    created() {
+        console.log("viper");
+        console.log(this.all_events);
     }
 }
 </script>

@@ -1,13 +1,14 @@
 var express = require('express');
 var router = express.Router();
-var temp = require('./../database.js'); // db interface
+var events = require('./../database.js').events; // db interface
+var users = require('./../database.js').users; // db interface
 
 /* Find from db*/
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
     var result;
-    temp.find(function(err, doc) {
+    events.find(function(err, doc) {
         // console.log(doc);
         result = doc;
     }).then(data => {
@@ -21,7 +22,7 @@ router.get('/', function(req, res, next) {
 router.post('/register_event', function(req, res, next) {
     console.log("Regsiter a new event to db");
     console.log(req.body);
-    new temp({
+    new events({
         'eid': req.body.eid,
         'title': req.body.title,
         'summary': req.body.summary,
@@ -38,7 +39,7 @@ router.post('/register_event', function(req, res, next) {
 router.post('/edit_registered_event', function(req, res, next) {
     console.log("edit_registered_event to db");
     console.log(req.body);
-    temp.update({"eid": req.body.eid}, {$set:
+    events.update({"eid": req.body.eid}, {$set:
         {"title": req.body.title,
         'summary': req.body.summary,
         'location': req.body.location,
@@ -53,7 +54,7 @@ router.post('/edit_registered_event', function(req, res, next) {
 router.post('/delete_event', function(req, res, next) {
     console.log("delete_event from db");
     console.log(req.body);
-    temp.remove({"eid": req.body.eid}, function(err){
+    events.remove({"eid": req.body.eid}, function(err){
         console.log(err);
         res.send('Finish deleting an event from db');
         res.end();

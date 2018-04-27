@@ -10,8 +10,8 @@
                         <input type="text" placeholder="Enter Password" v-model="user_password">
                         <button type="button" class="btn btn-info" v-on:click="user_login">Login</button>
                     </form>
-               
-               
+
+
                 <p>Dont' have an account? Please Sign up
                 <br>
                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#fly">HERE</button> </p>
@@ -71,13 +71,17 @@ export default {
   		console.log('user_login called');
         fetch('http://localhost:3000/users/'+'search?name='+this.user_name+'&password='+this.user_password, { method: 'GET' })
             .then(response => response.json())
-            .then(data => this.user_info = data)
-            .then(nextstep => console.log(this.user_info))
+            .then(data => {
+                console.log(data);
+                this.$router.push({path: '/Signedin/' + data['uid']});
+            })
             .catch(error => console.log(error))
         this.user_name = "";
         this.user_password = "";
-  	}
-
+  	},
+    modify_user() {
+        return;
+    }
   }
 }
 </script>

@@ -20,7 +20,7 @@ export default new Router({
       component: Admin
     },
     {
-      path: '/Signedin',
+      path: '/Signedin/:uid',
       name: 'Signedin',
       component: Signedin
     }

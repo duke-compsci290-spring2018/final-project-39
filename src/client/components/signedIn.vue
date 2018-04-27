@@ -16,13 +16,13 @@
             ></gmap-marker>
         </gmap-map>
         <Todoform v-bind:isNewTodo="isNewTodo"
-                  v-bind:todos="todos"
+                  v-bind:host_events="host_events"
                   v-bind:new_todo="new_todo"
                   v-on:handle_submitOldEvent="handle_submitOldEvent()"
                   v-on:handle_submitNewEvent="handle_submitNewEvent()"></Todoform>
 
         <Todolist v-bind:isNewTodo="isNewTodo"
-                  v-bind:todos="todos"
+                  v-bind:host_events="host_events"
                   v-on:editTodo="handle_editTodo($event)"
                   v-on:handle_deleteEvent="handle_deleteEvent($event)"></Todolist>
 
@@ -72,6 +72,7 @@ export default {
                     position: { lat: 48.85, lng: 2.35},   // Paris, France
                 }
             ],
+            uid: null,
             cur_id: -1,
             isNewTodo: true,
             new_todo: {
@@ -81,23 +82,25 @@ export default {
                 time: ' ',
                 location: ' '
             },
-            todos: [],  /* User hosted/registered events */
-            all_events: [
-                {
-                    eid: 1,
-                    title: 'CSGO',
-                    summary: '',
-                    location: 'Jinan',
-                    time: '2018-04-26'
-                },
-                {
-                    eid: 2,
-                    title: 'LADIES',
-                    summary: '',
-                    location: 'Qingdao',
-                    time: '2018-04-27'
-                }
-            ] /* All events, read from db events */
+            all_events: [],  /* User hosted/registered events */
+            booked_events: [], /* All events, read from db events */
+            host_events: [
+                // {
+                //     eid: 0,
+                //     title: 'play dota',
+                //     summary: ' ',
+                //     time: '2017-05-01',
+                //     location: 'DUKE'
+                // },
+                // {
+                //     eid: 1,
+                //     title: 'play lol',
+                //     summary: ' ',
+                //     time: '2017-05-01',
+                //     location: 'DUKE'
+                // }
+            ],
+            userInfo : null
         }
     },
     // components (HTML, CSS, and JS) used by this app
@@ -107,13 +110,45 @@ export default {
         Allevents
     },
     methods: {
+        listUserInfo () {
+            console.log('listUserInfo() called');
+            fetch('http://localhost:3000/users/' + this.uid, { method: 'GET' })
+                .then(response => response.json())
+                .then(data => this.userInfo = data)
+                .then(data => console.log("slarkkk"))
+                .then(data => console.log(this.userInfo))
+                .then(data => console.log('listEvents() called'))
+                .then(data => fetch(`http://localhost:3000`, { method: 'GET' }))
+                .then(response => response.json())
+                .then(data => this.all_events = data)
+                .then(data => console.log("vipppper"))
+                .then(data => console.log(this.all_events))
+                .then(data => {
+                    for (var key in this.userInfo['host_events']) {
+                        var eid = this.userInfo['host_events'][key];
+                        for (var key in this.all_events) {
+                            var e = this.all_events[key];
+                            if (e['eid'] === eid) {
+                                this.host_events.push(e);
+                            }
+                        }
+                    }
+                })
+                .then(data => console.log("love life"))
+                .then(data => console.log(this.all_events))
+                .catch(error => console.log(error))
+        },
         listEvents () {
             console.log('listEvents() called');
-            fetch(`http://localhost:3000`, { method: 'GET' })
+            fetch(`http://localhost:3000`, { method: 'GET' }) // visit schema events to grab all events
                 .then(response => response.json())
-                .then(data => this.todos = data)
-                .then(data => console.log(this.todos))
+                .then(data => this.all_events = data)
+                .then(data => console.log(this.all_events))
                 .catch(error => console.log(error))
+                // .then(response => {
+                //     this.all_events = response.json()})
+                // .then(data => console.log(this.all_events))
+                // .catch(error => console.log(error))
         },
         handle_bookEvent() {
             alert("handle bookEvent");
@@ -154,7 +189,7 @@ export default {
         handle_editTodo (todo){
             this.isNewTodo = false,
             this.new_todo = JSON.parse(JSON.stringify(todo)); //https://medium.com/@tkssharma/objects-in-javascript-object-assign-deep-copy-64106c9aefab
-            console.log(this.todos);
+            console.log(this.all_events);
         },
         addMarker (event) {
             this.markers.push({
@@ -172,7 +207,12 @@ export default {
         }
     },
     mounted () {
-        this.listEvents();
+        this.listUserInfo(); // grab from schema users
+    },
+    created() {
+        console.log("from created()");
+        console.log(this.$route.params.uid);
+        this.uid = this.$route.params.uid;
     }
 }
 </script>

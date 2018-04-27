@@ -38,7 +38,7 @@
 // export anonymous object from this module so it can be accessed by others when imported
 export default {
     name: 'todoForm',
-    props: ['isNewTodo', 'new_todo', 'todos'],
+    props: ['isNewTodo', 'new_todo', 'host_events'],
     data () {
         return {
 
@@ -56,10 +56,10 @@ export default {
                 this.$emit('handle_submitOldEvent');
             }
             else {
-                // this.new_todo['eid'] = this.todos.length+1;
-                if (this.todos.length > 0) {
-                    var last_idx = this.todos.length - 1;
-                    this.new_todo['eid'] = this.todos[last_idx]['eid'] + 1;
+                // this.new_todo['eid'] = this.host_events.length+1;
+                if (this.host_events.length > 0) {
+                    var last_idx = this.host_events.length - 1;
+                    this.new_todo['eid'] = this.host_events[last_idx]['eid'] + 1;
                 }
                 else {
                     this.new_todo['eid'] = 0
