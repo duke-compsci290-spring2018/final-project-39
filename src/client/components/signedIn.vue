@@ -21,7 +21,7 @@
                   v-bind:all_events="all_events"
                   v-on:handle_submitOldEvent="handle_submitOldEvent()"
                   v-on:handle_submitNewEvent="handle_submitNewEvent()"></Todoform>
-
+        <!-- You hosted events -->
         <Todolist v-bind:isNewTodo="isNewTodo"
                   v-bind:host_events="host_events"
                   v-on:editTodo="handle_editTodo($event)"
@@ -29,6 +29,8 @@
 
         <Allevents v-bind:all_events="all_events"
                    v-on:bookEvent="handle_bookEvent($event)"></Allevents>
+
+        <Bookedevents v-bind:booked_events="booked_events"></Bookedevents>
 
         <hr/>
 
@@ -52,6 +54,7 @@
 import Todolist from './todoList.vue'
 import Todoform from './todoForm.vue'
 import Allevents from './allEvents.vue'
+import Bookedevents from './bookedEvents.vue'
 
 // load JSON file driectly as JavaScript data structure, not recommended for LARGE data files
 
@@ -93,20 +96,21 @@ export default {
     components: {
         Todolist,
         Todoform,
-        Allevents
+        Allevents,
+        Bookedevents
     },
     methods: {
         listUserInfo () {
             console.log('listUserInfo() called');
             fetch('http://localhost:3000/users/' + this.uid, { method: 'GET' })
                 .then(response => response.json())
-                .then(data => this.userInfo = data)
+                .then(data => this.userInfo = data) // read user's data
                 .then(data => console.log("slarkkk"))
                 .then(data => console.log(this.userInfo))
                 .then(data => console.log('listEvents() called'))
                 .then(data => fetch(`http://localhost:3000`, { method: 'GET' }))
                 .then(response => response.json())
-                .then(data => this.all_events = data)
+                .then(data => this.all_events = data) // read in all events
                 .then(data => console.log("vipppper"))
                 .then(data => console.log(this.all_events))
                 .then(data => {
@@ -138,16 +142,29 @@ export default {
                 .then(data => console.log(this.all_events))
                 .catch(error => console.log(error))
         },
-        listEvents () {
-            console.log('listEvents() called');
-            fetch(`http://localhost:3000`, { method: 'GET' }) // visit schema events to grab all events
-                .then(response => response.json())
-                .then(data => this.all_events = data)
-                .then(data => console.log(this.all_events))
-                .catch(error => console.log(error))
-        },
-        handle_bookEvent() {
-            alert("handle bookEvent");
+        // listEvents () {
+        //     console.log('listEvents() called');
+        //     fetch(`http://localhost:3000`, { method: 'GET' }) // visit schema events to grab all events
+        //         .then(response => response.json())
+        //         .then(data => this.all_events = data)
+        //         .then(data => console.log(this.all_events))
+        //         .catch(error => console.log(error))
+        // },
+        handle_bookEvent(e) {
+            console.log("handle bookEvent");
+            console.log(e['eid']);
+            console.log(this.userInfo['booked_events']);
+            this.userInfo['booked_events'].push(e['eid']);
+            console.log('puddddge');
+            console.log(this.userInfo);
+            fetch(`http://localhost:3000/book_event`, {
+                method: 'POST',
+                body: JSON.stringify(this.userInfo),
+                headers: {
+                    'content-type': 'application/json'
+                }
+            }).then(response => this.listUserInfo())
+              .catch(error => console.log(error))
         },
         handle_submitOldEvent() {
             fetch(`http://localhost:3000/edit_registered_event`, {
@@ -156,7 +173,7 @@ export default {
                 headers: {
                     'content-type': 'application/json'
                 }
-            }).then(response => this.listEvents())
+            }).then(response => this.listUserInfo())
               .catch(error => console.log(error))
             this.isNewTodo = true;
             this.resetInputValues();
