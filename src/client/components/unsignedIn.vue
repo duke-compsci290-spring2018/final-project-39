@@ -29,11 +29,16 @@
                                           id="userName" placeholder="Enter New User Name" v-model="temp_name"/>
                                       </div>
                                       <div class="form-group">
-                                        <label for="userEmail">Content</label>
+                                        <label for="userPassword">Password</label>
+                                          <input type="text" class="form-control"
+                                              id="userPassword" placeholder="Enter New User Password" v-model="temp_email"/>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="userEmail">Email</label>
                                           <input type="text" class="form-control"
                                               id="userEmail" placeholder="Enter New User Email" v-model="temp_email"/>
                                       </div>
-                                      <button type="button" class="btn btn-info" data-dismiss="modal" v-on:click="modify_user">Save</button>
+                                      <button type="button" class="btn btn-info" data-dismiss="modal" v-on:click="modify_user">Create</button>
                                     </form>
                             </div>
                           </div>
@@ -68,9 +73,5 @@ export default {
     width: 80%;
     margin: auto;
     text-align: center;
-}
-
-.bts{
-    display: inline;
 }
 </style>
