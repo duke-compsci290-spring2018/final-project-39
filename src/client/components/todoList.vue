@@ -1,7 +1,7 @@
 <template>
     <!-- template must have a SINGLE root tag that encloses all others -->
     <div id="todo-list">
-        <h2 id="title">Your Events - Click List to Modify</h2>
+        <h2 id="title">Your hosted events - Click List to Modify</h2>
         <ul class="list-group">
             <li v-for="(todo, index) in todos">
                 <span title="click me to update this item" class="list-item" @click="$emit('editTodo', todo)">

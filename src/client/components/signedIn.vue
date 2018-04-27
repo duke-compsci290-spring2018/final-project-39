@@ -26,6 +26,9 @@
                   v-on:editTodo="handle_editTodo($event)"
                   v-on:handle_deleteEvent="handle_deleteEvent($event)"></Todolist>
 
+        <Allevents v-bind:all_events="all_events"
+                   v-on:bookEvent="handle_bookEvent($event)"></Allevents>
+
         <hr/>
 
         <h4>*Rules:</h4>
@@ -47,6 +50,7 @@
 // load another component to be used in the standard Vue object
 import Todolist from './todoList.vue'
 import Todoform from './todoForm.vue'
+import Allevents from './allEvents.vue'
 
 // load JSON file driectly as JavaScript data structure, not recommended for LARGE data files
 
@@ -77,13 +81,30 @@ export default {
                 time: ' ',
                 location: ' '
             },
-            todos: []
+            todos: [],  /* User hosted/registered events */
+            all_events: [
+                {
+                    eid: 1,
+                    title: 'CSGO',
+                    summary: '',
+                    location: 'Jinan',
+                    time: '2018-04-26'
+                },
+                {
+                    eid: 2,
+                    title: 'LADIES',
+                    summary: '',
+                    location: 'Qingdao',
+                    time: '2018-04-27'
+                }
+            ] /* All events, read from db events */
         }
     },
     // components (HTML, CSS, and JS) used by this app
     components: {
         Todolist,
-        Todoform
+        Todoform,
+        Allevents
     },
     methods: {
         listEvents () {
@@ -93,6 +114,9 @@ export default {
                 .then(data => this.todos = data)
                 .then(data => console.log(this.todos))
                 .catch(error => console.log(error))
+        },
+        handle_bookEvent() {
+            alert("handle bookEvent");
         },
         handle_submitOldEvent() {
             fetch(`http://localhost:3000/edit_registered_event`, {
