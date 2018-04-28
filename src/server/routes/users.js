@@ -3,20 +3,6 @@ var router = express.Router();
 var users = require('./../database.js').users; // db interface
 
 
-router.post('/edit_registered_event', function(req, res, next) {
-    console.log("edit_registered_event to db");
-    console.log(req.body);
-    events.update({"eid": req.body.eid}, {$set:
-        {"title": req.body.title,
-        'summary': req.body.summary,
-        'location': req.body.location,
-        'time': req.body.time}}, function(err, raw) {
-        console.log(raw);
-        res.send('Finish editing an old event to db');
-        res.end();
-    });
-})
-
 /* Sign up a new user. */
 router.post('/signup', function(req, res, next) {
     console.log("From server: sign up a new user");
@@ -57,8 +43,13 @@ router.get('/search', function(req, res, next) {
     }).then(data => {
         if (data.length > 0) {
             console.log("SUCCUESS!");
-            console.log("Uid is: ", data[0]._id);
-            res.send(200, { uid: data[0]._id });
+            if (data[0].username === "admin") { // if the logged-in user is admin
+                res.send(200, {uid: "admin-login-request-approved"});
+            }
+            else {
+                console.log("Uid is: ", data[0]._id);
+                res.send(200, { uid: data[0]._id });
+            }
         }
         else {
             console.log("FAILED!");
@@ -98,7 +89,7 @@ router.get('/admin/:username', function(req, res, next) {
 
 /* delete user with user name */
 router.get('/admin/delete/:username', function(req, res, next) {
-    var name = req.params.username 
+    var name = req.params.username
     console.log(name);
     users.remove({"username": name}, function(err) {
     }).then(result => {

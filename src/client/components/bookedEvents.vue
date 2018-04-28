@@ -5,7 +5,7 @@
         <ul class="list-group">
             <li v-for="(e, index) in booked_events">
                 <span class="list-item">
-                    {{ e['title'] }} @ {{ e['time'] }} @ {{ e['location'] }}
+                    {{ e['title'] }} @ {{ e['time'] }} @ {{ e['location'] }} @ {{ e['category'] }}
                  <button @click="deletebooked(e)"  class="btn btn-danger">X</button>
                      </span>
             </li>

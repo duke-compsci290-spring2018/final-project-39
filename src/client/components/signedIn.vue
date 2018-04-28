@@ -85,7 +85,8 @@ export default {
                 title: ' ',
                 summary: ' ',
                 time: ' ',
-                location: ' '
+                location: ' ',
+                category: ' '
             },
             all_events: [],  /* User hosted/registered events */
             booked_events: [], /* All events, read from db users */
@@ -244,7 +245,8 @@ export default {
                 title: ' ',
                 summary: ' ',
                 time: ' ',
-                location: ' '
+                location: ' ',
+                category:' '
             }
         }
     },

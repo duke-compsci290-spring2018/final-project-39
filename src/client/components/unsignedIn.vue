@@ -72,9 +72,19 @@ export default {
         fetch('http://localhost:3000/users/'+'search?name='+this.user_name+'&password='+this.user_password, { method: 'GET' })
             .then(response => response.json())
             .then(data => {
-                console.log("233333333333")
-                console.log(data);
-                this.$router.push({path: '/Signedin/' + data['uid']});
+                if (data['uid'] === "admin-login-request-approved") { // admin login
+                    this.$router.push({path: '/admin'});
+                }
+                else { // regular user login
+                    console.log("233333333333")
+                    console.log(data);
+                    if (data['uid'] === -1) {
+                        alert("Either wrong password or such user doesn't exist!");
+                    }
+                    else{
+                        this.$router.push({path: '/Signedin/' + data['uid']});
+                    }
+                }
             })
             .catch(error => console.log(error))
         this.user_name = "";

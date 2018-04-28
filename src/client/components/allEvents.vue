@@ -5,7 +5,7 @@
         <ul class="list-group">
             <li v-for="(e, index) in all_events">
                 <span title="click me to book this event" class="list-item" @click="$emit('bookEvent', e)">
-                    {{ e['title'] }} @ {{ e['time'] }} @ {{ e['location'] }} </span>
+                    {{ e['title'] }} @ {{ e['time'] }} @ {{ e['location'] }} @ {{ e['category'] }} </span>
             </li>
         </ul>
     </div>

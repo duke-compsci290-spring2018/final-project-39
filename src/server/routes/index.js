@@ -3,9 +3,7 @@ var router = express.Router();
 var events = require('./../database.js').events; // db interface
 var users = require('./../database.js').users; // db interface
 
-/* Find from db*/
-
-/* GET home page. */
+/* Get all events. */
 router.get('/', function(req, res, next) {
     var result;
     events.find(function(err, doc) {
@@ -27,7 +25,8 @@ router.post('/register_event', function(req, res, next) {
         'title': req.body.new_todo.title,
         'summary': req.body.new_todo.summary,
         'location': req.body.new_todo.location,
-        'time': req.body.new_todo.time
+        'time': req.body.new_todo.time,
+        'category': req.body.new_todo.category
     }).save(function(err, doc) {
         console.log(doc);
         console.log('8888888888888888');
@@ -46,15 +45,17 @@ router.post('/register_event', function(req, res, next) {
         })
 })
 
-/* Update from db*/
+/* Update event */
 router.post('/edit_registered_event', function(req, res, next) {
     console.log("edit_registered_event to db");
     console.log(req.body);
     events.update({"eid": req.body.eid}, {$set:
-        {"title": req.body.title,
-        'summary': req.body.summary,
-        'location': req.body.location,
-        'time': req.body.time}}, function(err, raw) {
+        {
+            "title": req.body.title,
+            'summary': req.body.summary,
+            'location': req.body.location,
+            'time': req.body.time,
+            'category': req.body.category }}, function(err, raw) {
         console.log(raw);
         res.send('Finish editing an old event to db');
         res.end();
@@ -95,6 +96,7 @@ router.post('/delete_event', function(req, res, next) {
     });
 })
 
+/* Admin remove event - set to expire */
 router.post('/admin_delete_event', function(req, res, next) {
     events.update({"eid": req.body.eid}, {$set: {"title": "(*Note: Deleted by the Adminstritor) " + req.body.title}}, function(err) {
         console.log(err);

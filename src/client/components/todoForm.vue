@@ -24,6 +24,16 @@
                     </select>
                 </label>
 
+                <label>Category
+                    <select v-model="new_todo.category">
+                        <option value="Academic">Academic</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Volunteer">Volunteer</option>
+                        <option value="Careers">Careers</option>
+                    </select>
+                </label>
+
                 <label>Event Schedule
                     <input type="date" v-model="new_todo.time" name="eventSchedule"/>
                 </label>

@@ -5,7 +5,7 @@
         <ul class="list-group">
             <li v-for="(todo, index) in host_events">
                 <span title="click me to update this item" class="list-item" @click="$emit('editTodo', todo)">
-                    {{ todo['title'] }} @ {{ todo['time'] }} @ {{ todo['location'] }} </span>
+                    {{ todo['title'] }} @ {{ todo['time'] }} @ {{ todo['location'] }} @ {{ todo['category'] }} </span>
                 <button @click="deleteTodo(todo)"  class="btn btn-danger" href="#">X</button>
             </li>
         </ul>
