@@ -4,8 +4,10 @@
         <h2 id="title">You booked events</h2>
         <ul class="list-group">
             <li v-for="(e, index) in booked_events">
-                <span title="click me to book this event" class="list-item">
-                    {{ e['title'] }} @ {{ e['time'] }} @ {{ e['location'] }} </span>
+                <span class="list-item">
+                    {{ e['title'] }} @ {{ e['time'] }} @ {{ e['location'] }}
+                 <button @click="deletebooked(e)"  class="btn btn-danger">X</button>
+                     </span>
             </li>
         </ul>
     </div>
@@ -20,6 +22,9 @@ export default {
         }
     },
     methods: {
+        deletebooked(event) {
+            this.$emit('deleteBookedevent', event);
+        }
     },
     created() {
         console.log("In bookedEvents component");

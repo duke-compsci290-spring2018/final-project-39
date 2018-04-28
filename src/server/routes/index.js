@@ -65,17 +65,18 @@ router.post('/edit_registered_event', function(req, res, next) {
     });
 })
 
-/* Book an event, update schema users */
-router.post('/book_event', function(req, res, next) {
-    console.log("book an event to db");
+/* Unbook/Book an event, update schema users */
+router.post('/update_booked_events', function(req, res, next) {
+    console.log("book/unbook an event to db");
     console.log('body is: ', req.body);
     console.log(req.body.uid);
     users.update({"uid": req.body.uid}, {$set:{"booked_events":req.body.booked_events}}, function(err, raw) {
         console.log(raw);
-        res.send('Finish booking an event to db');
+        res.send('Finish book/unbooking an event to db');
         res.end();
     })
 })
+
 
 
 /* Previous version: Remove from db*/
@@ -89,15 +90,14 @@ router.post('/book_event', function(req, res, next) {
 //     });
 // })
 
+/* Host remove event - set to expire */
 router.post('/delete_event', function(req, res, next) {
-    console.log("delete_event from db");
-    console.log(req.body);
-    console.log("req.body.title: ", req.body.title);
     events.update({"eid": req.body.eid}, {$set: {"title": "(*Note: Deleted by the host) " + req.body.title}}, function(err) {
         console.log(err);
         res.send('Finish deleting an event from db');
         res.end();
     });
 })
+
 
 module.exports = router;

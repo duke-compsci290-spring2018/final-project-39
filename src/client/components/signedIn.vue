@@ -30,7 +30,8 @@
         <Allevents v-bind:all_events="all_events"
                    v-on:bookEvent="handle_bookEvent($event)"></Allevents>
 
-        <Bookedevents v-bind:booked_events="booked_events"></Bookedevents>
+        <Bookedevents v-bind:booked_events="booked_events"
+                      v-on:deleteBookedevent="handle_deleteBooked($event)"></Bookedevents>
 
         <hr/>
 
@@ -151,13 +152,8 @@ export default {
         //         .catch(error => console.log(error))
         // },
         handle_bookEvent(e) {
-            console.log("handle bookEvent");
-            console.log(e['eid']);
-            console.log(this.userInfo['booked_events']);
             this.userInfo['booked_events'].push(e['eid']);
-            console.log('puddddge');
-            console.log(this.userInfo);
-            fetch(`http://localhost:3000/book_event`, {
+            fetch(`http://localhost:3000/updated_booked_events`, {
                 method: 'POST',
                 body: JSON.stringify(this.userInfo),
                 headers: {
@@ -210,6 +206,38 @@ export default {
             this.isNewTodo = false,
             this.new_todo = JSON.parse(JSON.stringify(todo)); //https://medium.com/@tkssharma/objects-in-javascript-object-assign-deep-copy-64106c9aefab
             console.log(this.all_events);
+        },
+        handle_deleteBooked(event) {
+            console.log("called from delete booked event");
+            //console.log(event);
+            var to_delete = event['eid'];
+            for (var i in this.host_events){
+                // console.log(i, to_delete);
+                // console.log(this.host_events);
+                if (this.host_events[i]['eid'] === to_delete){
+                    alert("You are the host of this event!");
+                    return;
+                }
+            }
+            console.log(this.userInfo['booked_events']);
+            console.log(to_delete);
+            for (var i in this.userInfo['booked_events']) {
+                console.log("here")
+                console.log(i)
+                if (this.userInfo['booked_events'][i] === to_delete) {
+                    this.userInfo['booked_events'].splice(i, 1);
+                    console.log(this.userInfo['booked_events'])
+                    return;
+                }
+            }
+            fetch(`http://localhost:3000/update_booked_events`, {
+                method: 'POST',
+                body: JSON.stringify(this.userInfo),
+                headers: {
+                    'content-type': 'application/json'
+                }
+            }).then(response => this.listUserInfo())
+              .catch(error => console.log(error))
         },
         addMarker (event) {
             this.markers.push({
