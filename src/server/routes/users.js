@@ -13,8 +13,8 @@ router.get('/search', function(req, res, next) {
     }).then(data => {
         if (data.length > 0) {
             console.log("SUCCUESS!");
-            console.log("Uid is: ", data[0].uid);
-            res.send(200, { uid: data[0].uid });
+            console.log("Uid is: ", data[0]._id);
+            res.send(200, { uid: data[0]._id });
         }
         else {
             console.log("FAILED!");
@@ -26,7 +26,7 @@ router.get('/search', function(req, res, next) {
 
 router.get('/:uid', function(req, res, next) {
     var uid = req.params.uid //grab :uid
-    users.find({"uid": uid}, function(err, doc) {
+    users.find({"_id": uid}, function(err, doc) {
         // console.log(err);
         //console.log('from server doc');
         //console.log(doc);

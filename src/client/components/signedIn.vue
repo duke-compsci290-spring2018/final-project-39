@@ -103,17 +103,14 @@ export default {
     methods: {
         listUserInfo () {
             console.log('listUserInfo() called');
+            console.log('uid: ', this.uid);
             fetch('http://localhost:3000/users/' + this.uid, { method: 'GET' })
                 .then(response => response.json())
                 .then(data => this.userInfo = data) // read user's data
-                .then(data => console.log("slarkkk"))
                 .then(data => console.log(this.userInfo))
-                .then(data => console.log('listEvents() called'))
                 .then(data => fetch(`http://localhost:3000`, { method: 'GET' }))
                 .then(response => response.json())
                 .then(data => this.all_events = data) // read in all events
-                .then(data => console.log("vipppper"))
-                .then(data => console.log(this.all_events))
                 .then(data => {
                     // populate host_events
                     this.host_events = [];

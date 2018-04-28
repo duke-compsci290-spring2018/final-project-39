@@ -33,12 +33,8 @@ router.post('/register_event', function(req, res, next) {
         console.log('8888888888888888');
         console.log('66666666666666666666');
         console.log('2333333', req.body.new_userInfo);
-        users.update({"uid": req.body.new_userInfo.uid}, {$set:
+        users.update({"_id": req.body.new_userInfo._id}, {$set:
             {
-                "uid": req.body.new_userInfo.uid,
-                "username": req.body.new_userInfo.username,
-                "password":req.body.new_userInfo.password,
-                "email":req.body.new_userInfo.email,
                 "booked_events":req.body.new_userInfo.booked_events,
                 "host_events":req.body.new_userInfo.host_events
             }
@@ -69,8 +65,8 @@ router.post('/edit_registered_event', function(req, res, next) {
 router.post('/update_booked_events', function(req, res, next) {
     console.log("book/unbook an event to db");
     console.log('body is: ', req.body);
-    console.log(req.body.uid);
-    users.update({"uid": req.body.uid}, {$set:{"booked_events":req.body.booked_events}}, function(err, raw) {
+    console.log(req.body._id);
+    users.update({"_id": req.body._id}, {$set:{"booked_events":req.body.booked_events}}, function(err, raw) {
         console.log(raw);
         res.send('Finish book/unbooking an event to db');
         res.end();

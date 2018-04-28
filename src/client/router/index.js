@@ -4,7 +4,6 @@ import Admin from './../components/admin.vue'
 import Unsignedin from './../components/unsignedIn.vue'
 import Signedin from './../components/signedIn.vue'
 
-
 Vue.use(Router)
 
 export default new Router({

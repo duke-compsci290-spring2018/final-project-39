@@ -72,6 +72,7 @@ export default {
         fetch('http://localhost:3000/users/'+'search?name='+this.user_name+'&password='+this.user_password, { method: 'GET' })
             .then(response => response.json())
             .then(data => {
+                console.log("233333333333")
                 console.log(data);
                 this.$router.push({path: '/Signedin/' + data['uid']});
             })
