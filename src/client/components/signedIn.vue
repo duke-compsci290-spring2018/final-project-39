@@ -16,11 +16,16 @@
             ></gmap-marker>
         </gmap-map>
         <Todoform v-bind:isNewTodo="isNewTodo"
-                  v-bind:host_events="host_events"
                   v-bind:new_todo="new_todo"
+                  v-bind:host_events="host_events"
                   v-bind:all_events="all_events"
+                  v-bind:categories="categories"
                   v-on:handle_submitOldEvent="handle_submitOldEvent()"
                   v-on:handle_submitNewEvent="handle_submitNewEvent()"></Todoform>
+
+
+        <Toolkit v-bind:categories="categories"></Toolkit>
+
         <!-- You hosted events -->
         <Hostevents v-bind:isNewTodo="isNewTodo"
                   v-bind:host_events="host_events"
@@ -56,6 +61,7 @@ import Hostevents from './hostEvents.vue'
 import Todoform from './todoForm.vue'
 import Allevents from './allEvents.vue'
 import Bookedevents from './bookedEvents.vue'
+import Toolkit from './tools/toolKit.vue'
 
 // load JSON file driectly as JavaScript data structure, not recommended for LARGE data files
 
@@ -91,6 +97,7 @@ export default {
             all_events: [],  /* User hosted/registered events */
             booked_events: [], /* All events, read from db users */
             host_events: [], /* All events, read from db users */
+            categories: ['All', 'Academic', 'Careers', 'Entertainment', 'Sports', 'Volunteer'],
             userInfo : null
         }
     },
@@ -99,7 +106,8 @@ export default {
         Hostevents,
         Todoform,
         Allevents,
-        Bookedevents
+        Bookedevents,
+        Toolkit
     },
     methods: {
         listUserInfo () {
@@ -246,7 +254,7 @@ export default {
                 summary: ' ',
                 time: ' ',
                 location: ' ',
-                category:' '
+                category: ' '
             }
         }
     },

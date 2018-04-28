@@ -26,11 +26,9 @@
 
                 <label>Category
                     <select v-model="new_todo.category">
-                        <option value="Academic">Academic</option>
-                        <option value="Entertainment">Entertainment</option>
-                        <option value="Sports">Sports</option>
-                        <option value="Volunteer">Volunteer</option>
-                        <option value="Careers">Careers</option>
+                        <option v-for="category in categories" v-bind:value="category">
+                            {{ category }}
+                        </option>
                     </select>
                 </label>
 
@@ -48,7 +46,7 @@
 // export anonymous object from this module so it can be accessed by others when imported
 export default {
     name: 'todoForm',
-    props: ['isNewTodo', 'new_todo', 'host_events', 'all_events'],
+    props: ['isNewTodo', 'new_todo', 'host_events', 'all_events', 'categories'],
     data () {
         return {
 

@@ -1,6 +1,6 @@
 <template>
     <!-- template must have a SINGLE root tag that encloses all others -->
-    <div id="todo-list">
+    <div id="booked-events">
         <h2 id="title">You booked events</h2>
         <ul class="list-group">
             <li v-for="(e, index) in booked_events">

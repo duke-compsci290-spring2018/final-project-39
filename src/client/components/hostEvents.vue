@@ -1,6 +1,6 @@
 <template>
     <!-- template must have a SINGLE root tag that encloses all others -->
-    <div id="todo-list">
+    <div id="host-events">
         <h2 id="title">Your hosted events - Click List to Modify</h2>
         <ul class="list-group">
             <li v-for="(todo, index) in host_events">

@@ -6,7 +6,8 @@ var schema = new mongoose.Schema({
     'title': String,
     'summary': String,
     'location': String,
-    'time': String
+    'time': String,
+    'category': String
 });
 var events = mongoose.model('events', schema);
 
