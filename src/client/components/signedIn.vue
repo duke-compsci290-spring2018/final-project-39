@@ -153,7 +153,7 @@ export default {
         // },
         handle_bookEvent(e) {
             this.userInfo['booked_events'].push(e['eid']);
-            fetch(`http://localhost:3000/updated_booked_events`, {
+            fetch(`http://localhost:3000/update_booked_events`, {
                 method: 'POST',
                 body: JSON.stringify(this.userInfo),
                 headers: {
@@ -222,14 +222,11 @@ export default {
             console.log(this.userInfo['booked_events']);
             console.log(to_delete);
             for (var i in this.userInfo['booked_events']) {
-                console.log("here")
-                console.log(i)
                 if (this.userInfo['booked_events'][i] === to_delete) {
                     this.userInfo['booked_events'].splice(i, 1);
-                    console.log(this.userInfo['booked_events'])
-                    return;
                 }
             }
+            console.log(this.userInfo['booked_events'])
             fetch(`http://localhost:3000/update_booked_events`, {
                 method: 'POST',
                 body: JSON.stringify(this.userInfo),
@@ -237,7 +234,7 @@ export default {
                     'content-type': 'application/json'
                 }
             }).then(response => this.listUserInfo())
-              .catch(error => console.log(error))
+            .catch(error => console.log(error))
         },
         addMarker (event) {
             this.markers.push({
