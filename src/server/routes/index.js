@@ -95,5 +95,13 @@ router.post('/delete_event', function(req, res, next) {
     });
 })
 
+router.post('/admin_delete_event', function(req, res, next) {
+    events.update({"eid": req.body.eid}, {$set: {"title": "(*Note: Deleted by the Adminstritor) " + req.body.title}}, function(err) {
+        console.log(err);
+        res.send('Finish deleting an event from db');
+        res.end();
+    });
+})
+
 
 module.exports = router;
