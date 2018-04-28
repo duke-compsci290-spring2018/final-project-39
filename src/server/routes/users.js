@@ -2,12 +2,56 @@ var express = require('express');
 var router = express.Router();
 var users = require('./../database.js').users; // db interface
 
+
+router.post('/edit_registered_event', function(req, res, next) {
+    console.log("edit_registered_event to db");
+    console.log(req.body);
+    events.update({"eid": req.body.eid}, {$set:
+        {"title": req.body.title,
+        'summary': req.body.summary,
+        'location': req.body.location,
+        'time': req.body.time}}, function(err, raw) {
+        console.log(raw);
+        res.send('Finish editing an old event to db');
+        res.end();
+    });
+})
+
+/* Sign up a new user. */
+router.post('/signup', function(req, res, next) {
+    console.log("From server: sign up a new user");
+    console.log(req.body);
+    users.find({"username": req.body.new_username}, function(err, doc){
+        console.log(err)
+    }).then(data => {
+        console.log("SANITY CHECK FOR SIGNING UP NEW USER")
+        console.log(data);
+        if (data.length === 0) { // such user does not exist yet, good to store
+            new users({
+                'username': req.body.new_username,
+                'password': req.body.new_password,
+                'email': req.body.new_email,
+                'booked_events': [],
+                'host_events': []
+            }).save(function(err, doc) {
+                console.log("looked at doc: ", doc);
+                res.send("202", {"is_user_exist": 0});
+                res.end();
+            })
+        }
+        else {
+            res.send("200", {"is_user_exist": 1});
+            res.end();
+        }
+    })
+
+})
+
 /* GET User login check. */
 router.get('/search', function(req, res, next) {
     //console.log(req.query.name);
     //console.log(req.query.password);
     //res.send('Hello!  ' + req.query.name + req.query.password);
-
     users.find({"username": req.query.name, "password": req.query.password}, function(err, doc) {
         // console.log(err);
     }).then(data => {
@@ -24,6 +68,7 @@ router.get('/search', function(req, res, next) {
     });
 });
 
+/* GET User data back. */
 router.get('/:uid', function(req, res, next) {
     var uid = req.params.uid //grab :uid
     users.find({"_id": uid}, function(err, doc) {

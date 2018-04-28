@@ -7,7 +7,7 @@
                     <p>Please login in</p>
                     <form class="form">
                         <input type="text" placeholder="Enter Username" v-model="user_name">
-                        <input type="text" placeholder="Enter Password" v-model="user_password">
+                        <input type="password" placeholder="Enter Password" v-model="user_password">
                         <button type="button" class="btn btn-info" v-on:click="user_login">Login</button>
                     </form>
 
@@ -30,7 +30,7 @@
                                       </div>
                                       <div class="form-group">
                                         <label for="userPassword">Password</label>
-                                          <input type="text" class="form-control"
+                                          <input type="password" class="form-control"
                                               id="userPassword" placeholder="Enter New User Password" v-model="temp_password"/>
                                       </div>
                                       <div class="form-group">
@@ -38,7 +38,7 @@
                                           <input type="text" class="form-control"
                                               id="userEmail" placeholder="Enter New User Email" v-model="temp_email"/>
                                       </div>
-                                      <button type="button" class="btn btn-info" data-dismiss="modal" v-on:click="modify_user">Create</button>
+                                      <button type="button" class="btn btn-info" data-dismiss="modal" v-on:click="signup">Create</button>
                                     </form>
                             </div>
                           </div>
@@ -80,8 +80,31 @@ export default {
         this.user_name = "";
         this.user_password = "";
   	},
-    modify_user() {
-        return;
+    signup() {
+        fetch(`http://localhost:3000/users/signup`, {
+            method: 'POST',
+            body: JSON.stringify({
+                "new_username": this.temp_name,
+                "new_password": this.temp_password,
+                "new_email": this.temp_email
+            }),
+            headers: {
+                'content-type': 'application/json'
+            }
+        }).then(response => response.json())
+        .then(data => {
+            if (data['is_user_exist'] === 0) {
+                alert("Successfully signed up!");
+            }
+            else {
+                alert("This username has been registered, please pick another one!");
+            }
+        })
+        .catch(error => console.log(error))
+
+        this.temp_name = "";
+        this.temp_password = "";
+        this.temp_email = "";
     }
   }
 }
