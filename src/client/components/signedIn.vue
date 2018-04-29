@@ -2,7 +2,7 @@
     <div id="app">
         <gmap-map
             :center="center"
-            :zoom="12"
+            :zoom="14"
             @click="addMarker"
             style="height: 480px;"
         >
@@ -72,16 +72,16 @@ export default {
     data () {
         return {
             center: {
-                lat: 35.99,
-                lng: -78.89
+                lat: 36.002939, // Duke West Campus, Perkins Library
+                lng: -78.938367
             },
             markers: [
-                {
-                    position: { lat: 35.99, lng: -78.89}, // Durham, NC
-                },
-                {
-                    position: { lat: 48.85, lng: 2.35},   // Paris, France
-                }
+                // {
+                //     position: { lat: 35.99, lng: -78.89}, // Durham, NC
+                // },
+                // {
+                //     position: { lat: 52.16, lng: 4.48},   // Paris, France
+                // }
             ],
             uid: null,
             cur_id: -1,
@@ -94,7 +94,7 @@ export default {
                 location: ' ',
                 category: ' '
             },
-            all_events: [],  /* User hosted/registered events */
+            all_events: [],  /* User hosted/registered events -- the actual event info, not just the eid*/
             booked_events: [], /* All events, read from db users */
             host_events: [], /* All events, read from db users */
             categories: ['All', 'Academic', 'Careers', 'Entertainment', 'Sports', 'Volunteer'],
@@ -144,9 +144,14 @@ export default {
                             }
                         }
                     }
+
+                    for (var i = 0; i < this.booked_events.length; i++) {
+                        this.markers.push({position: this.booked_events[i]['position']});
+                    }
                 })
                 .then(data => console.log("love life"))
                 .then(data => console.log(this.all_events))
+                .then(data => console.log(this.markers))
                 .catch(error => console.log(error))
         },
         // listEvents () {

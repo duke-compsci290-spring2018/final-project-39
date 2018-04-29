@@ -17,11 +17,9 @@
                     <textarea rows="4" cols="50" v-model="new_todo.summary" name="comment" form="usrform"> Enter text here...</textarea>
                 </label>
 
-                <label>Location
-                    <select v-model="new_todo.location">
-                        <option value="Duke">Duke</option>
-                        <option value="UNC">UNC</option>
-                    </select>
+                <label>
+                    Location
+                    <input type="textarea" v-model="new_todo.location" class="form-control"/>
                 </label>
 
                 <label>Category

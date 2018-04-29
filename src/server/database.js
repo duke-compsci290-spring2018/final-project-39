@@ -6,6 +6,10 @@ var schema = new mongoose.Schema({
     'title': String,
     'summary': String,
     'location': String,
+    'position': {
+        'lat': Number,
+        'lng': Number
+    },
     'time': String,
     'category': String
 });

@@ -1,6 +1,14 @@
 var express = require('express');
 var router = express.Router();
+
 var nodemailer = require('nodemailer');
+// var geocoder = require('geocoder');
+var geocoder = require('google-geocoder');
+
+var geo = geocoder({
+  key: 'AIzaSyB6H33ssoD0J3Iuu4RGUCiaXyuUVAPzmiI'
+});
+
 var events = require('./../database.js').events; // db interface
 var users = require('./../database.js').users; // db interface
 
@@ -73,6 +81,27 @@ router.post('/send_email', function(req, res, next){
       });
 });
 
+/* Geocoder test */
+router.post('/geocoder_test', function(req, res, next){
+    console.log("Geocoder testing");
+    console.log(req.body.address);
+
+    // Google-geocoding
+    geo.find(req.body.address, function(err, data){
+      // process response object
+      console.log(data[0]['location']['lat']);
+      console.log(typeof data[0]['location']['lat']);
+      res.send(data);
+      res.end();
+    });
+
+    // Geocoding
+    // geocoder.geocode(req.body.address, function ( err, data ) {
+    //     console.log(data);
+    //     res.send(JSON.stringify(data));
+    //     res.end();
+    // });
+});
 
 /* Get all events. */
 router.get('/', function(req, res, next) {
@@ -91,46 +120,55 @@ router.get('/', function(req, res, next) {
 router.post('/register_event', function(req, res, next) {
     console.log("Regsiter a new event to db");
     console.log(req.body);
-    new events({
-        'eid': req.body.new_todo.eid,
-        'title': req.body.new_todo.title,
-        'summary': req.body.new_todo.summary,
-        'location': req.body.new_todo.location,
-        'time': req.body.new_todo.time,
-        'category': req.body.new_todo.category
-    }).save(function(err, doc) {
-        console.log(doc);
-        console.log('8888888888888888');
-        console.log('66666666666666666666');
-        console.log('2333333', req.body.new_userInfo);
-        users.update({"_id": req.body.new_userInfo._id}, {$set:
-            {
-                "booked_events":req.body.new_userInfo.booked_events,
-                "host_events":req.body.new_userInfo.host_events
-            }
-        }, function(err, raw) {
+
+    // Google-geocoding
+    geo.find(req.body.location, function(err, data){
+        new events({
+            'eid': req.body.new_todo.eid,
+            'title': req.body.new_todo.title,
+            'summary': req.body.new_todo.summary,
+            'location': req.body.new_todo.location,
+            'position': data[0]['location'],
+            'time': req.body.new_todo.time,
+            'category': req.body.new_todo.category
+        }).save(function(err, doc) {
+            console.log(doc);
+            users.update({"_id": req.body.new_userInfo._id}, {$set:
+                {
+                    "booked_events":req.body.new_userInfo.booked_events,
+                    "host_events":req.body.new_userInfo.host_events
+                }
+            }, function(err, raw)
+                {
                     console.log(raw);
                     res.send('Finish adding a new event to db');
                     res.end();
-            })
-        })
+                })
+          })
+    });
 })
 
 /* Update event */
 router.post('/edit_registered_event', function(req, res, next) {
     console.log("edit_registered_event to db");
     console.log(req.body);
-    events.update({"eid": req.body.eid}, {$set:
-        {
-            "title": req.body.title,
-            'summary': req.body.summary,
-            'location': req.body.location,
-            'time': req.body.time,
-            'category': req.body.category }}, function(err, raw) {
-        console.log(raw);
-        res.send('Finish editing an old event to db');
-        res.end();
+
+    geo.find(req.body.address, function(err, data){
+      events.update({"eid": req.body.eid}, {$set:
+            {
+                "title": req.body.title,
+                'summary': req.body.summary,
+                'location': req.body.location,
+                'position': data[0]['location'],
+                'time': req.body.time,
+                'category': req.body.category }}, function(err, raw) {
+                    console.log(raw);
+                    res.send('Finish editing an old event to db');
+                    res.end();
+                });
     });
+
+
 })
 
 /* Unbook/Book an event, update schema users */

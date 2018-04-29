@@ -8,6 +8,9 @@
                 {{ category }}
             </option>
         </select>
+
+    </br></br>
+        <button @click="geocoder_test">geocoder test</button>
     </div>
 </template>
 <script>
@@ -36,6 +39,18 @@ export default {
                         $(selector).css('display', '');
                 }
             }
+        },
+        geocoder_test() {
+            fetch(`http://localhost:3000/geocoder_test`, {
+                method: 'POST',
+                body: JSON.stringify({address: "2517 W. Woodrow St., Durham, NC"}),
+                headers: {
+                    'content-type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.log(error))
         }
 
     },
