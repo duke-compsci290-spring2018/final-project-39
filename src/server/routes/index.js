@@ -1,7 +1,67 @@
 var express = require('express');
 var router = express.Router();
+var nodemailer = require('nodemailer');
 var events = require('./../database.js').events; // db interface
 var users = require('./../database.js').users; // db interface
+
+
+/* send email reminder of upcoming event */
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'klaviyo2018junbo@gmail.com',
+    pass: 'klaviyo2018'
+  }
+});
+
+var mailOptions = {
+  from: 'klaviyo2018junbo@gmail.com',
+  to: [],
+  subject: 'Sending Email using Node.js',
+  text: 'TEST MULTIPLE RECIPIENTS!'
+};
+
+router.post('/send_email', function(req, res, next){
+    console.log("Sending emails");
+    console.log(req.body)
+    console.log(req.body.eid);
+    var recipients = [];
+
+    /* resrouce: https://stackoverflow.com/questions/25507866/how-can-i-use-a-cursor-foreach-in-mongodb-using-node-js */
+    users.find({}).stream()
+    .on('data', function(doc){
+        // handle doc)
+        if (doc.username != 'admin') {
+            for (var i = 0; i < doc.booked_events.length; i++) {
+                if (doc.booked_events[i] === req.body.eid) {
+                    recipients.push(doc.email);
+                }
+            }
+        }
+    })
+    .on('error', function(err){
+        // handle error
+        console.log(err)
+    })
+    .on('end', function(){
+        // final callback
+        console.log("receipient list");
+        console.log(recipients);
+        mailOptions.to = recipients;
+        mailOptions.subject = 'Your booked event ' + req.body.title + ' is coming up soon';
+        mailOptions.text = 'Time: ' + req.body.time + ' ; Location: ' + req.body.location;
+        transporter.sendMail(mailOptions, function(error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+                res.send("Done");
+                res.end();
+            }
+        })
+      });
+});
+
 
 /* Get all events. */
 router.get('/', function(req, res, next) {

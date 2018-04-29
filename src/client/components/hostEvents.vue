@@ -3,10 +3,11 @@
     <div id="host-events">
         <h2 id="title">Your hosted events - Click List to Modify</h2>
         <ul class="list-group">
-            <li v-for="(todo, index) in host_events">
-                <span title="click me to update this item" class="list-item" @click="$emit('editTodo', todo)">
-                    {{ todo['title'] }} @ {{ todo['time'] }} @ {{ todo['location'] }} @ {{ todo['category'] }} </span>
-                <button @click="deleteTodo(todo)"  class="btn btn-danger" href="#">X</button>
+            <li v-for="(e, index) in host_events">
+                <button @click="send_reminder(e)">Send email reminder</button>
+                <span title="click me to update this item" class="list-item" @click="$emit('editTodo', e)">
+                    {{ e['title'] }} @ {{ e['time'] }} @ {{ e['location'] }} @ {{ e['category'] }} </span>
+                <button @click="deleteTodo(e)"  class="btn btn-danger" href="#">X</button>
             </li>
         </ul>
     </div>
@@ -23,8 +24,8 @@ export default {
         }
     },
     methods: {
-        deleteTodo(todo) {
-            this.$emit('handle_deleteEvent', todo);
+        deleteTodo(e) {
+            this.$emit('handle_deleteEvent', e);
             // for (var i = 0; i < this.host_events.length; i++) {
             //     if (this.host_events[i].eid == todo.eid) {
             //         //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
@@ -34,6 +35,18 @@ export default {
             //         return;
             //     }
             // }
+        },
+        send_reminder(e) {
+            fetch(`http://localhost:3000/send_email`, {
+                method: 'POST',
+                body: JSON.stringify(e),
+                headers: {
+                    'content-type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.log(error))
         }
     }
 }

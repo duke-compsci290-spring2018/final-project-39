@@ -8,10 +8,6 @@
                 {{ category }}
             </option>
         </select>
-
-        </br>
-        </br>
-        <button>Send email reminder</button>
     </div>
 </template>
 <script>
@@ -26,25 +22,22 @@ export default {
     },
     methods: {
         apply_visible_category() {
-          console.log("apply visible category");
-          // var a = ['a', 'b'];
-          // console.log(typeof a);
-          // console.log(a[1]);
-          // console.log(this.categories[0]);
-          var prefix = ".event.";
-          if (this.selected === "All" || this.selected === '') {
-            $(".event").css('display', '');
-          }
-          else {
-            for (var i = 0; i < this.categories.length; i++) {
-              var selector = prefix + this.categories[i];
-              if (this.categories[i] != this.selected)
-                $(selector).css('display', 'none');
-              else
-                $(selector).css('display', '');
+            console.log("apply visible category");
+            var prefix = ".event.";
+            if (this.selected === "All" || this.selected === '') {
+                $(".event").css('display', '');
             }
-          }
+            else {
+                for (var i = 0; i < this.categories.length; i++) {
+                    var selector = prefix + this.categories[i];
+                    if (this.categories[i] != this.selected)
+                        $(selector).css('display', 'none');
+                    else
+                        $(selector).css('display', '');
+                }
+            }
         }
+
     },
     created() {
         console.log("In bookedEvents component");
