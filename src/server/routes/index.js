@@ -18,7 +18,8 @@ var mailOptions = {
   from: 'klaviyo2018junbo@gmail.com',
   to: [],
   subject: 'Sending Email using Node.js',
-  text: 'TEST MULTIPLE RECIPIENTS!'
+  // text: 'TEST MULTIPLE RECIPIENTS!'，
+  html: null
 };
 
 router.post('/send_email', function(req, res, next){
@@ -49,7 +50,17 @@ router.post('/send_email', function(req, res, next){
         console.log(recipients);
         mailOptions.to = recipients;
         mailOptions.subject = 'Your booked event ' + req.body.title + ' is coming up soon';
-        mailOptions.text = 'Time: ' + req.body.time + ' ; Location: ' + req.body.location;
+        // mailOptions.text = 'Time: ' + req.body.time + ' ; Location: ' + req.body.location;
+        mailOptions.html = `
+            <h3>Your event reminder: </h3>
+            <ul>
+                <li>Name: ${req.body.title}</li>
+                <li>Time: ${req.body.time}</li>
+                <li>Location: ${req.body.location}</li>
+            </ul>
+            <h3> Summary </h3>
+            <p> ${req.body.summary} </p>
+        `
         transporter.sendMail(mailOptions, function(error, info) {
             if (error) {
                 console.log(error);
