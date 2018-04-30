@@ -255,7 +255,7 @@ router.post('/edit_registered_event', function(req, res, next) {
     console.log("edit_registered_event to db");
     console.log(req.body);
 
-    geo.find(req.body.address, function(err, data){
+    geo.find(req.body.location, function(err, data){
       events.update({"eid": req.body.eid}, {$set:
             {
                 "title": req.body.title,
