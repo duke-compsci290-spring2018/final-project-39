@@ -1,5 +1,7 @@
 <template>
     <div id="app">
+        <h1>Hello, {{userInfo.username}} </h1>
+        <button class="btn btn-danger" v-on:click="logout">logout</button>
         <gmap-map
             :center="center"
             :zoom="14"
@@ -98,7 +100,7 @@ export default {
             booked_events: [], /* All events, read from db users */
             host_events: [], /* All events, read from db users */
             categories: ['All', 'Academic', 'Careers', 'Entertainment', 'Sports', 'Volunteer'],
-            userInfo : null
+            userInfo : {username: ''}
         }
     },
     // components (HTML, CSS, and JS) used by this app
@@ -117,7 +119,7 @@ export default {
                 .then(response => response.json())
                 .then(data => this.userInfo = data) // read user's data
                 .then(data => console.log(this.userInfo))
-                .then(data => fetch(`http://localhost:3000`, { method: 'GET' })
+                .then(data => {fetch(`http://localhost:3000`, { method: 'GET' })
                     .then(response => response.json())
                     .then(data => this.all_events = data) // read in all events
                     .then(data => {
@@ -150,46 +152,11 @@ export default {
                         }
                     })
                     .then(data => console.log("love life"))
-                    .then(data => console.log(this.all_events))
+                    //.then(data => console.log(this.all_events))
                     .then(data => console.log(this.markers))
                     .catch(error => console.log(error))
-                )
+                })
             .catch(error => console.log(error))
-                // .then(response => response.json())
-                // .then(data => this.all_events = data) // read in all events
-                // .then(data => {
-                //     // populate host_events
-                //     this.host_events = [];
-                //     for (var key in this.userInfo['host_events']) {
-                //         var eid = this.userInfo['host_events'][key];
-                //         for (var key in this.all_events) {
-                //             var e = this.all_events[key];
-                //             if (e['eid'] === eid) {
-                //                 this.host_events.push(e);
-                //             }
-                //         }
-                //     }
-                //
-                //     // populate booked_events
-                //     this.booked_events = [];
-                //     for (var key in this.userInfo['booked_events']) {
-                //         var eid = this.userInfo['booked_events'][key];
-                //         for (var key in this.all_events) {
-                //             var e = this.all_events[key];
-                //             if (e['eid'] === eid) {
-                //                 this.booked_events.push(e);
-                //             }
-                //         }
-                //     }
-                //
-                //     for (var i = 0; i < this.booked_events.length; i++) {
-                //         this.markers.push({position: this.booked_events[i]['position']});
-                //     }
-                // })
-                // .then(data => console.log("love life"))
-                // .then(data => console.log(this.all_events))
-                // .then(data => console.log(this.markers))
-                // .catch(error => console.log(error))
         },
         // listEvents () {
         //     console.log('listEvents() called');
@@ -298,6 +265,9 @@ export default {
                 location: ' ',
                 category: ' '
             }
+        },
+        logout() {
+            this.$router.push({path: '/'});
         }
     },
     mounted () {

@@ -207,14 +207,11 @@ router.post('/geocoder_test', function(req, res, next){
 
 /* Get all events. */
 router.get('/', function(req, res, next) {
-    var result;
     events.find(function(err, doc) {
         // console.log(doc);
-        result = doc;
-    }).then(data => {
-        res.send(JSON.stringify(result));
+        res.send(JSON.stringify(doc));
         res.end();
-        console.log(`${result.length} event(s) in database`)
+        console.log(`${doc.length} event(s) in database`)
     });
 });
 
