@@ -24,31 +24,23 @@
     <button type="button" class="btn btn-info" 
     data-toggle="collapse" 
     v-bind:data-target=hash_ground style="width:80px; height:40px">Info</button>
-    <button type="button" class="btn btn-primary" style="width:80px; height:40px" v-on:click="editEvent">Edit</button>
-    <button type="button" class="btn btn-primary" style="width:80px; height:40px" v-on:click="sendEmail">Email</button>
     <button type="button" class="btn btn-danger" style="width:80px; height:40px" v-on:click="deleteEvent">Delete</button>
   </li>
 </template>
 
 <script>
 export default {
-  name: 'Card3',
+  name: 'Card4',
   props: ['event'],
   data: function () {
       return {
-        ground: "MyCollapseC"+this.event['eid'],
-        hash_ground: "#MyCollapseC"+this.event['eid']
+        ground: "MyCollapseE"+this.event['eid'],
+        hash_ground: "#MyCollapseE"+this.event['eid']
       }
     },
   methods : {
     deleteEvent (){
       this.$emit('deleteEvent', this.event);
-    },
-    editEvent(){
-      this.$emit('editEvent', this.event);
-    },
-    sendEmail(){
-      this.$emit('sendEmail', this.event);
     }
   }
 }
