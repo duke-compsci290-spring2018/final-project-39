@@ -40,6 +40,8 @@ Technologies used are
 **Answer**:
 There is no special instruction. Simply visit https://github.com/duke-compsci290-spring2018/final-project-39 and you are able to start to track what's happening around you!
 
+(For personal reminder: At root level of this project, run `$git subtree push --prefix src/server heroku master` to deploy the server side/app to heroku.
+
 ---------
 #### Data reference:
 ---------
