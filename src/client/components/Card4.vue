@@ -1,7 +1,7 @@
 <template>
   <li>
     <div>
-      <img src="https://firebasestorage.googleapis.com/v0/b/mytrello-cc521.appspot.com/o/images%2Fsport.jpg?alt=media&token=0a8c09cc-8b7b-4592-96d3-b3632650210f"/>
+      <img src=imgtype/>
     </div>
     <span>
       <i>&mdash;</i>
@@ -45,15 +45,22 @@ export default {
     }
   },
   created () {
-   if (this.event.category === "Sport"){
-    imgtype = "https://firebasestorage.googleapis.com/v0/b/mytrello-cc521.appspot.com/o/images%2Fsport.jpg?alt=media&token=d9788a43-c260-48d4-b2b9-93f094275aea";
+   if (this.event.category === "Sports"){
+    this.imgtype = "https://firebasestorage.googleapis.com/v0/b/mytrello-cc521.appspot.com/o/images%2Fsport.jpg?alt=media&token=d9788a43-c260-48d4-b2b9-93f094275aea";
    }
    else if(this.event.category === "Academic"){
-    imgtype = "https://firebasestorage.googleapis.com/v0/b/mytrello-cc521.appspot.com/o/images%2FAcademic.jpg?alt=media&token=41ed3516-1fa4-4516-91d2-5373e00b0657";
+    this.imgtype = "https://firebasestorage.googleapis.com/v0/b/mytrello-cc521.appspot.com/o/images%2FAcademic.jpg?alt=media&token=41ed3516-1fa4-4516-91d2-5373e00b0657";
    }
    else if(this.event.category === "Entertainment"){
-    imgtype = "https://firebasestorage.googleapis.com/v0/b/mytrello-cc521.appspot.com/o/images%2FEntertainment.jpg?alt=media&token=7891dfd1-749a-4b46-b3b6-26fd578b4505";
+    this.imgtype = "https://firebasestorage.googleapis.com/v0/b/mytrello-cc521.appspot.com/o/images%2FEntertainment.jpg?alt=media&token=7891dfd1-749a-4b46-b3b6-26fd578b4505";
    }
+   else if(this.event.category === "Volunteer"){
+    this.imgtype = "https://firebasestorage.googleapis.com/v0/b/mytrello-cc521.appspot.com/o/images%2Fvolunteer.jpg?alt=media&token=422efe78-6127-47fd-af8c-0a74e24b810d";
+   }
+   else if(this.event.category === "Careers"){
+    this.imgtype = "https://firebasestorage.googleapis.com/v0/b/mytrello-cc521.appspot.com/o/images%2Fcareer.jpg?alt=media&token=1c71e2ee-cb7d-4d11-8d8e-ed125cfaf8e2";
+   }
+   else{this.imgtype = "https://firebasestorage.googleapis.com/v0/b/mytrello-cc521.appspot.com/o/images%2FAll.jpeg?alt=media&token=edf992d2-2ad2-434d-9fcb-7ad7bce64fed";}
    }
 }
 
