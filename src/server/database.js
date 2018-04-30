@@ -1,7 +1,7 @@
 /* Connect to db*/
 var mongoose = require('mongoose');
 // mongoose.connect("mongodb://localhost/events");
-mongoose.connect("mongodb://jl781:jl781@ds263639.mlab.com:63639/heroku_tm038t3k");
+mongoose.connect("mongodb://jl781:jl781@ds263759.mlab.com:63759/heroku_wv75rl6z");
 
 var schema = new mongoose.Schema({
     'eid': Number,
