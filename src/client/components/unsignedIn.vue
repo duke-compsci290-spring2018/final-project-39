@@ -79,8 +79,8 @@ export default {
     },
   	user_login () {
   		console.log('user_login called');
-        console.log(SERVER_URL+'/search?name='+this.user_name+'&password='+this.user_password);
-        fetch(SERVER_URL+'/search?name='+this.user_name+'&password='+this.user_password, { method: 'GET' })
+        console.log(SERVER_URL+'/users/search?name='+this.user_name+'&password='+this.user_password);
+        fetch(SERVER_URL+'/users/search?name='+this.user_name+'&password='+this.user_password, { method: 'GET' })
             .then(response => response.json())
             .then(data => {
                 if (data['uid'] === "admin-login-request-approved") { // admin login
