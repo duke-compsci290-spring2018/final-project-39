@@ -35,9 +35,9 @@ router.post('/signup', function(req, res, next) {
 
 /* GET User login check. */
 router.get('/search', function(req, res, next) {
-    //console.log(req.query.name);
-    //console.log(req.query.password);
-    //res.send('Hello!  ' + req.query.name + req.query.password);
+    console.log(req.query.name);
+    console.log(req.query.password);
+    res.send('Hello!  ' + req.query.name + req.query.password);
     users.find({"username": req.query.name, "password": req.query.password}, function(err, doc) {
         // console.log(err);
     }).then(data => {
