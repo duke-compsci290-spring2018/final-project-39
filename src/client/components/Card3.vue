@@ -25,6 +25,7 @@
     data-toggle="collapse" 
     v-bind:data-target=hash_ground style="width:80px; height:40px">Info</button>
     <button type="button" class="btn btn-primary" style="width:80px; height:40px" v-on:click="editEvent">Edit</button>
+    <button type="button" class="btn btn-primary" style="width:80px; height:40px" v-on:click="sendEmail">Send Email Reminder</button>
     <button type="button" class="btn btn-danger" style="width:80px; height:40px" v-on:click="deleteEvent">Delete</button>
   </li>
 </template>
@@ -44,7 +45,10 @@ export default {
       this.$emit('deleteEvent', this.event);
     },
     editEvent(){
-      this.$emit('editEvent', this.event)
+      this.$emit('editEvent', this.event);
+    },
+    sendEmail(){
+      this.$emit('sendEmail', this.event);
     }
   }
 }

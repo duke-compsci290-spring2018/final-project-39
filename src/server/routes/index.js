@@ -224,7 +224,7 @@ router.post('/register_event', function(req, res, next) {
     console.log(req.body);
 
     // Google-geocoding
-    geo.find(req.body.location, function(err, data){
+    geo.find(req.body.new_todo.location, function(err, data){
         new events({
             'eid': req.body.new_todo.eid,
             'title': req.body.new_todo.title,

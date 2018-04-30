@@ -12,7 +12,8 @@
             <Card3 v-for="(e, index) in host_events" 
                  v-bind:event="e" 
                  v-on:deleteEvent="deleteTodo(e)"
-                 v-on:editEvent="$emit('editTodo', e)">
+                 v-on:editEvent="$emit('editTodo', e)"
+                 v-on:sendEmail="send_reminder(e)">
             </Card3>
         </ul>
     </div>

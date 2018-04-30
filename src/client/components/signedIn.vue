@@ -145,16 +145,6 @@ export default {
                             }
                         }
 
-<<<<<<< HEAD
-                    for (var i = 0; i < this.booked_events.length; i++) {
-                        this.markers.push({position: this.booked_events[i]['position']});
-                    }
-                })
-                .then(data => console.log("love life"))
-                //.then(data => console.log(this.all_events))
-                //.then(data => console.log(this.markers))
-                .catch(error => console.log(error))
-=======
                         for (var i = 0; i < this.booked_events.length; i++) {
                             this.markers.push({position: this.booked_events[i]['position']});
                         }
@@ -200,7 +190,6 @@ export default {
                 // .then(data => console.log(this.all_events))
                 // .then(data => console.log(this.markers))
                 // .catch(error => console.log(error))
->>>>>>> be37a4950cddea1807d5869a2a22926e3fbb4da4
         },
         // listEvents () {
         //     console.log('listEvents() called');
