@@ -183,27 +183,6 @@ router.post('/send_email', function(req, res, next){
       });
 });
 
-/* Geocoder test */
-router.post('/geocoder_test', function(req, res, next){
-    console.log("Geocoder testing");
-    console.log(req.body.address);
-
-    // Google-geocoding
-    geo.find(req.body.address, function(err, data){
-      // process response object
-      console.log(data[0]['location']['lat']);
-      console.log(typeof data[0]['location']['lat']);
-      res.send(data);
-      res.end();
-    });
-
-    // Geocoding
-    // geocoder.geocode(req.body.address, function ( err, data ) {
-    //     console.log(data);
-    //     res.send(JSON.stringify(data));
-    //     res.end();
-    // });
-});
 
 /* Get all events. */
 router.get('/', function(req, res, next) {

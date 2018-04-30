@@ -3,7 +3,7 @@
     <nav class="navbar navbar-default">
           <div class="container-fluid">
                 <div class=logincss>
-                    <h3>Welcome!</h3>
+                    <h3>Welcome Blue Devils!</h3>
                     <p>Please login in</p>
                     <form class="form">
                         <input type="text" placeholder="Enter Username" v-model="user_name">
