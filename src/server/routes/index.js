@@ -23,11 +23,6 @@ var mailOptions = {
     }] //https://community.nodemailer.com/using-embedded-images/
 };
 
-router.get('/heroku_test', function(req, res, next){
-    res.send(JSON.stringify({msg: "hello from larry"}));
-    res.end();
-});
-
 router.post('/send_email', function(req, res, next){
     console.log("Sending emails");
     console.log(req.body)
