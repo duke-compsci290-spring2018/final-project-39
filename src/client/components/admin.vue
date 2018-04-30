@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { SERVER_URL } from './../assets/secrets.js';
 
 import Bookedevents from './bookedEvents.vue'
 import Adminallevents from './adminallEvents.vue'
@@ -33,9 +34,9 @@ export default {
     	all_events: [],
     	searched: false,
     	userInfo: {
-    		user_name: "", 
-    		email: "", 
-    		booked_events: [], 
+    		user_name: "",
+    		email: "",
+    		booked_events: [],
     		host_events: []
     	}
     }
@@ -51,13 +52,13 @@ export default {
   		console.log('call search');
   		this.userInfo['user_name'] = "";
   		this.userInfo['email'] = "";
-        fetch('http://localhost:3000/users/admin/' + this.user_name, { method: 'GET' })
+        fetch(SERVER_URL + '/users/admin/' + this.user_name, { method: 'GET' })
                 .then(response => response.json())
                 //.then(res => console.log('hi james',res))
                 .then(data => {
                     if(data === -1){
                     	alert("user not exist");
-                        this.searched = false; 
+                        this.searched = false;
                         this.userInfo['user_name'] = "";
                         this.userInfo['email'] = "";}
                     else{
@@ -71,7 +72,7 @@ export default {
 
   	listEvents () {
         console.log('listEvents() called');
-        fetch('http://localhost:3000', { method: 'GET' }) // visit schema events to grab all events
+        fetch(SERVER_URL, { method: 'GET' }) // visit schema events to grab all events
             .then(response => response.json())
             .then(data => this.all_events = data)
             //.then(data => console.log(this.all_events))
@@ -80,14 +81,14 @@ export default {
 
     delete_user(){
         console.log('delete_user called');
-        fetch('http://localhost:3000/users/admin/delete/'+ this.user_name, { method: 'GET' }) 
+        fetch(SERVER_URL + '/users/admin/delete/'+ this.user_name, { method: 'GET' })
             .then(response => console.log(response))
             .catch(error => console.log(error))
         this.searched = false;
         },
     deleteEvent(event){
     	console.log('delete_event called');
-    	fetch('http://localhost:3000/admin_delete_event/', {
+    	fetch(SERVER_URL + '/admin_delete_event/', {
                 method: 'POST',
                 body: JSON.stringify(event),
                 headers: {

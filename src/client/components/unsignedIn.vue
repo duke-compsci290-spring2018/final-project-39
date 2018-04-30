@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import { SERVER_URL } from './../assets/secrets.js';
+
 export default {
   name: 'unsignedIn',
 
@@ -69,7 +71,7 @@ export default {
   methods : {
   	user_login () {
   		console.log('user_login called');
-        fetch('http://localhost:3000/users/'+'search?name='+this.user_name+'&password='+this.user_password, { method: 'GET' })
+        fetch(SERVER_URL+'/search?name='+this.user_name+'&password='+this.user_password, { method: 'GET' })
             .then(response => response.json())
             .then(data => {
                 if (data['uid'] === "admin-login-request-approved") { // admin login
@@ -91,7 +93,7 @@ export default {
         this.user_password = "";
   	},
     signup() {
-        fetch(`http://localhost:3000/users/signup`, {
+        fetch(SERVER_URL+`/users/signup`, {
             method: 'POST',
             body: JSON.stringify({
                 "new_username": this.temp_name,

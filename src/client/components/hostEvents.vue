@@ -9,8 +9,8 @@
                     {{ e['title'] }} @ {{ e['time'] }} @ {{ e['location'] }} @ {{ e['category'] }} </span>
                 <button @click="deleteTodo(e)"  class="btn btn-danger" href="#">X</button>
             </li> -->
-            <Card3 v-for="(e, index) in host_events" 
-                 v-bind:event="e" 
+            <Card3 v-for="(e, index) in host_events"
+                 v-bind:event="e"
                  v-on:deleteEvent="deleteTodo(e)"
                  v-on:editEvent="$emit('editTodo', e)"
                  v-on:sendEmail="send_reminder(e)">
@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { SERVER_URL } from './../assets/secrets.js';
 
 import Card3 from './Card3.vue'
 // export anonymous object from this module so it can be accessed by others when imported
@@ -51,7 +52,7 @@ export default {
             // }
         },
         send_reminder(e) {
-            fetch(`http://localhost:3000/send_email`, {
+            fetch(SERVER_URL + `/send_email`, {
                 method: 'POST',
                 body: JSON.stringify(e),
                 headers: {

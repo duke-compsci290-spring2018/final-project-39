@@ -58,6 +58,8 @@
 </template>
 
 <script>
+import { SERVER_URL } from './../assets/secrets.js';
+
 // load another component to be used in the standard Vue object
 import Hostevents from './hostEvents.vue'
 import Todoform from './todoForm.vue'
@@ -115,11 +117,11 @@ export default {
         listUserInfo () {
             console.log('listUserInfo() called');
             console.log('uid: ', this.uid);
-            fetch('http://localhost:3000/users/' + this.uid, { method: 'GET' })
+            fetch(SERVER_URL + '/users/' + this.uid, { method: 'GET' })
                 .then(response => response.json())
                 .then(data => this.userInfo = data) // read user's data
                 .then(data => console.log(this.userInfo))
-                .then(data => {fetch(`http://localhost:3000`, { method: 'GET' })
+                .then(data => {fetch(SERVER_URL, { method: 'GET' })
                     .then(response => response.json())
                     .then(data => this.all_events = data) // read in all events
                     .then(data => {
@@ -158,17 +160,9 @@ export default {
                 })
             .catch(error => console.log(error))
         },
-        // listEvents () {
-        //     console.log('listEvents() called');
-        //     fetch(`http://localhost:3000`, { method: 'GET' }) // visit schema events to grab all events
-        //         .then(response => response.json())
-        //         .then(data => this.all_events = data)
-        //         .then(data => console.log(this.all_events))
-        //         .catch(error => console.log(error))
-        // },
         handle_bookEvent(e) {
             this.userInfo['booked_events'].push(e['eid']);
-            fetch(`http://localhost:3000/update_booked_events`, {
+            fetch(SERVER_URL + `/update_booked_events`, {
                 method: 'POST',
                 body: JSON.stringify(this.userInfo),
                 headers: {
@@ -178,7 +172,7 @@ export default {
               .catch(error => console.log(error))
         },
         handle_submitOldEvent() {
-            fetch(`http://localhost:3000/edit_registered_event`, {
+            fetch(SERVER_URL + `/edit_registered_event`, {
                 method: 'POST',
                 body: JSON.stringify(this.new_todo),
                 headers: {
@@ -192,7 +186,7 @@ export default {
         handle_submitNewEvent() {
             this.userInfo['host_events'].push(this.new_todo['eid']);
             this.userInfo['booked_events'].push(this.new_todo['eid']);
-            fetch(`http://localhost:3000/register_event`, {
+            fetch(SERVER_URL + `/register_event`, {
                 method: 'POST',
                 body: JSON.stringify({
                     'new_todo': this.new_todo,
@@ -208,7 +202,7 @@ export default {
         handle_deleteEvent(todo) {
             console.log("called from handle_deleteEvent()");
             console.log(todo);
-            fetch(`http://localhost:3000/delete_event`, {
+            fetch(SERVER_URL + `/delete_event`, {
                 method: 'POST',
                 body: JSON.stringify(todo),
                 headers: {
@@ -242,7 +236,7 @@ export default {
                 }
             }
             console.log(this.userInfo['booked_events'])
-            fetch(`http://localhost:3000/update_booked_events`, {
+            fetch(SERVER_URL + `/update_booked_events`, {
                 method: 'POST',
                 body: JSON.stringify(this.userInfo),
                 headers: {
