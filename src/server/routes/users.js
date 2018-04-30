@@ -35,6 +35,7 @@ router.post('/signup', function(req, res, next) {
 
 /* GET User login check. */
 router.get('/search', function(req, res, next) {
+    console.log("from /search");
     console.log(req.query.name);
     console.log(req.query.password);
     // res.send('Hello!  ' + req.query.name + req.query.password);
