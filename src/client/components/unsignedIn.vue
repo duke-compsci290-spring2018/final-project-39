@@ -4,6 +4,7 @@
           <div class="container-fluid">
                 <div class=logincss>
                     <h3>Welcome!</h3>
+                    <button v-on:click="heroku_check">check</button>
                     <p>Please login in</p>
                     <form class="form">
                         <input type="text" placeholder="Enter Username" v-model="user_name">
@@ -69,8 +70,16 @@ export default {
   },
 
   methods : {
+    heroku_check() {
+        fetch(SERVER_URL + '/heroku_test', { method: 'GET'} )
+            .then(response => response.json())
+            .then(data => {
+                console.log("YOYOYOYOY: ", data);
+            })
+    },
   	user_login () {
   		console.log('user_login called');
+        console.log(SERVER_URL+'/search?name='+this.user_name+'&password='+this.user_password);
         fetch(SERVER_URL+'/search?name='+this.user_name+'&password='+this.user_password, { method: 'GET' })
             .then(response => response.json())
             .then(data => {

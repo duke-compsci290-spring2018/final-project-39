@@ -24,7 +24,7 @@ var mailOptions = {
 };
 
 router.get('/heroku_test', function(req, res, next){
-    res.send("hello from larry");
+    res.send(JSON.stringify({msg: "hello from larry"}));
     res.end();
 });
 
