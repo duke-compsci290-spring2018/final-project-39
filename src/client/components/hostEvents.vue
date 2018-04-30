@@ -2,18 +2,25 @@
     <!-- template must have a SINGLE root tag that encloses all others -->
     <div id="host-events">
         <h2 id="title">Your hosted events - Click List to Modify</h2>
-        <ul class="list-group">
-            <li v-for="(e, index) in host_events">
+        <ul>
+            <!-- <li v-for="(e, index) in host_events">
                 <button @click="send_reminder(e)">Send email reminder</button>
                 <span title="click me to update this item" class="list-item" @click="$emit('editTodo', e)">
                     {{ e['title'] }} @ {{ e['time'] }} @ {{ e['location'] }} @ {{ e['category'] }} </span>
                 <button @click="deleteTodo(e)"  class="btn btn-danger" href="#">X</button>
-            </li>
+            </li> -->
+            <Card3 v-for="(e, index) in host_events" 
+                 v-bind:event="e" 
+                 v-on:deleteEvent="deleteTodo(e)"
+                 v-on:editEvent="$emit('editTodo', e)">
+            </Card3>
         </ul>
     </div>
 </template>
 
 <script>
+
+import Card3 from './Card3.vue'
 // export anonymous object from this module so it can be accessed by others when imported
 export default {
     name: 'hostEvents',
@@ -23,7 +30,13 @@ export default {
 
         }
     },
+    components :{
+        Card3
+    },
     methods: {
+        // editTodo(e) {
+        //     this.$emit('editTodo', e);
+        // },
         deleteTodo(e) {
             this.$emit('handle_deleteEvent', e);
             // for (var i = 0; i < this.host_events.length; i++) {
@@ -51,3 +64,11 @@ export default {
     }
 }
 </script>
+
+<style scoped lang="scss">
+  ul {
+    display: grid;
+    grid-template-columns: repeat( auto-fit, minmax( 320px, auto ) );
+    grid-gap: 1rem;
+  }
+</style>

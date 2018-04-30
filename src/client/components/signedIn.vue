@@ -32,11 +32,11 @@
                   v-on:editTodo="handle_editTodo($event)"
                   v-on:handle_deleteEvent="handle_deleteEvent($event)"></Hostevents>
 
-        <Allevents v-bind:all_events="all_events"
-                   v-on:bookEvent="handle_bookEvent($event)"></Allevents>
-
         <Bookedevents v-bind:booked_events="booked_events"
                       v-on:deleteBookedevent="handle_deleteBooked($event)"></Bookedevents>
+
+        <Allevents v-bind:all_events="all_events"
+                   v-on:bookEvent="handle_bookEvent($event)"></Allevents>
 
         <hr/>
 
@@ -150,8 +150,8 @@ export default {
                     }
                 })
                 .then(data => console.log("love life"))
-                .then(data => console.log(this.all_events))
-                .then(data => console.log(this.markers))
+                //.then(data => console.log(this.all_events))
+                //.then(data => console.log(this.markers))
                 .catch(error => console.log(error))
         },
         // listEvents () {
@@ -216,7 +216,7 @@ export default {
         handle_editTodo (todo){
             this.isNewTodo = false,
             this.new_todo = JSON.parse(JSON.stringify(todo)); //https://medium.com/@tkssharma/objects-in-javascript-object-assign-deep-copy-64106c9aefab
-            console.log(this.all_events);
+            //console.log(this.all_events);
         },
         handle_deleteBooked(event) {
             console.log("called from delete booked event");

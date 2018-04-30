@@ -21,8 +21,8 @@ export default {
         }
     },
     created() {
-        console.log("viper");
-        console.log(this.all_events);
+        //console.log("viper");
+        //console.log(this.all_events);
     }
 }
 </script>
