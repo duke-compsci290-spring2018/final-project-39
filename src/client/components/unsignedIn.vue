@@ -47,12 +47,15 @@
                 </div>
           </div>
         </nav>
+        <Allevents2 v-bind:all_events="all_events"
+                   v-on:bookEvent="handle_bookEvent($event)"></Allevents2>
   </div>
 
 </template>
 
 <script>
-import { SERVER_URL } from './../assets/secrets.js';
+import { SERVER_URL } from './../assets/secrets.js'
+import Allevents2 from './allEvents2.vue'
 
 export default {
   name: 'unsignedIn',
@@ -64,9 +67,13 @@ export default {
       temp_name: "",
       temp_password: "",
       temp_email: "",
-      user_info: []
+      user_info: [],
+      all_events: null
     }
   },
+   components: {
+        Allevents2
+    },
 
   methods : {
   	user_login () {
@@ -118,8 +125,20 @@ export default {
         this.temp_name = "";
         this.temp_password = "";
         this.temp_email = "";
+    },
+    listEvents () {
+        console.log('listEvents() called');
+        fetch(SERVER_URL, { method: 'GET' }) // visit schema events to grab all events
+            .then(response => response.json())
+            .then(data => this.all_events = data)
+            //.then(data => console.log(this.all_events))
+            .catch(error => console.log(error))
+        }
+  },
+
+  mounted () {
+        this.listEvents(); // grab from schema users
     }
-  }
 }
 </script>
 
