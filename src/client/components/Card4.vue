@@ -1,7 +1,7 @@
 <template>
   <li>
     <div>
-      <img src=imgtype/>
+       <img v-bind:src=imgtype>
     </div>
     <span>
       <i>&mdash;</i>

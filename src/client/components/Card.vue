@@ -1,7 +1,7 @@
 <template>
   <li>
     <div>
-       <img src=imgtype/>
+       <img v-bind:src=imgtype>
     </div>
     <span>
       <i>&mdash;</i>
@@ -59,6 +59,7 @@ export default {
     this.imgtype = "https://firebasestorage.googleapis.com/v0/b/mytrello-cc521.appspot.com/o/images%2Fcareer.jpg?alt=media&token=1c71e2ee-cb7d-4d11-8d8e-ed125cfaf8e2";
    }
    else{this.imgtype = "https://firebasestorage.googleapis.com/v0/b/mytrello-cc521.appspot.com/o/images%2FAll.jpeg?alt=media&token=edf992d2-2ad2-434d-9fcb-7ad7bce64fed";}
+   console.log(this.imgtype);
    }
 }
 
