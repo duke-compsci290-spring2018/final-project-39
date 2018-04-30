@@ -35,14 +35,26 @@ export default {
   data: function () {
       return {
         ground: "MyCollapseE"+this.event['eid'],
-        hash_ground: "#MyCollapseE"+this.event['eid']
+        hash_ground: "#MyCollapseE"+this.event['eid'],
+        imgtype : ""
       }
     },
   methods : {
     deleteEvent (){
       this.$emit('deleteEvent', this.event);
     }
-  }
+  },
+  created () {
+   if (this.event.category === "Sport"){
+    imgtype = "https://firebasestorage.googleapis.com/v0/b/mytrello-cc521.appspot.com/o/images%2Fsport.jpg?alt=media&token=d9788a43-c260-48d4-b2b9-93f094275aea";
+   }
+   else if(this.event.category === "Academic"){
+    imgtype = "https://firebasestorage.googleapis.com/v0/b/mytrello-cc521.appspot.com/o/images%2FAcademic.jpg?alt=media&token=41ed3516-1fa4-4516-91d2-5373e00b0657";
+   }
+   else if(this.event.category === "Entertainment"){
+    imgtype = "https://firebasestorage.googleapis.com/v0/b/mytrello-cc521.appspot.com/o/images%2FEntertainment.jpg?alt=media&token=7891dfd1-749a-4b46-b3b6-26fd578b4505";
+   }
+   }
 }
 
 </script>
